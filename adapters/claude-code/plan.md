@@ -8,56 +8,31 @@ description: >-
 
 # /plan — Start the Plan Flow
 
-Launch the conductor agent to guide through the 4-step plan creation flow:
-requirements → discovery → analysis → write plan.
+Run the 6-step plan flow using CLI-guided instructions.
 
 ## When to Use
 
 - User wants to plan a new feature or significant change
 - User says "plan a feature", "let's plan this", "what's the approach"
-- User wants to evaluate implementation options before starting
 - Any scenario requiring structured discovery and analysis
 
 ## How It Works
 
-1. This command launches the **conductor agent** with the full plan flow.
-2. The conductor reads `steps/step-01-requirements.md` and begins interactive requirements gathering.
-3. The conductor spawns sub-agents for discovery and analysis.
-4. Decision cards are presented for the user to pick an approach.
-5. A plan document is written and reviewed.
-6. After finalize, `/split {slug}` is suggested.
+1. Run `bw step preamble {slug}` to load conductor rules
+2. Run `bw step show 1 {slug}` through `bw step show 6 {slug}` in order
+3. Each step output tells you exactly what to do — including when to HALT, when to spawn a sub-agent, and what the next command is
+4. When a step says to spawn a sub-agent, give the sub-agent the exact bootstrap command shown in the output
+5. After finalize, suggest `/split {slug}` or `/work`
 
-## Conductor Prompt
+## Before Step 1
 
-The conductor agent should:
+If no slug exists yet (new plan), start with step 1 using a placeholder slug. After `bw plan init "<title>"` runs, use the real slug for subsequent steps.
 
-1. **Read step definition**: Read `steps/step-01-requirements.md`
-2. **Follow the step-by-step flow** in that file
-3. **Spawn sub-agents** (discovery, analysis, plan-writer) as specified in `steps/step-02-*.md`, `step-03-*.md`, `step-04-*.md`
-4. **Use the agent prompts** from `agents/conductor.md` for orchestration
-5. **Use `bw` CLI** for all document access and state management
+## Sub-Agent Spawning
 
-## Key Agent Files
-
-| File | Role |
-|------|------|
-| `steps/step-01-requirements.md` | Interactive requirements gathering |
-| `steps/step-02-discovery.md` | Discovery flow |
-| `steps/step-03-analysis.md` | Analysis with decision cards |
-| `steps/step-04-write-plan.md` | Plan document writing |
-| `agents/conductor.md` | Conductor agent definition |
-| `agents/discovery.md` | Discovery sub-agent |
-| `agents/analysis.md` | Analysis sub-agent |
-| `agents/plan-writer.md` | Plan writer sub-agent |
+When a step output includes a "Spawn Sub-Agent" section, give the sub-agent the exact prompt shown. The sub-agent will run `bw step agent <N> {slug}` to self-bootstrap with its full instructions. You do NOT need to read the sub-agent's instructions yourself.
 
 ## Examples
 
 - `/plan "add user authentication"` — start planning auth
-- `/plan "fix memory leak in worker pool"` — start planning the fix
 - `/plan` — prompts for feature description
-
-## Notes
-
-- The conductor handles all document creation via `bw plan init/read/finalize`.
-- Sub-agents return summaries, not full reports — conductor maintains lean context.
-- After the plan is finalized, suggest: `/split {slug}`

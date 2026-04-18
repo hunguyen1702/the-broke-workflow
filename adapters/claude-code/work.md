@@ -16,7 +16,7 @@ Claim a task atomically and execute it using the task file as the primary brief.
 
 ## How It Works
 
-1. **Claim** the task atomically: `bw task claim {id} --owner {agent}`
+1. **Claim** the task: `bw task claim {id} --owner {agent}`
 2. **Read** the task file: `bw task show {id}`
 3. **Read** referenced files (scope section of task file)
 4. **Execute** — work through acceptance criteria
@@ -31,20 +31,6 @@ Claim a task atomically and execute it using the task file as the primary brief.
 
 Example: `/work auth-feature-x7k2/001-add-user-model`
 
-## Fallback: Plan Context
-
-If the task file doesn't contain enough context, you MAY read the plan:
-```
-bw plan read {slug} plan
-```
-
-If you needed plan context, log the gap:
-```
-⚠️ Needed plan context: {what was missing from task file}
-```
-
-This gap improves future task writing.
-
 ## Key Rules
 
 1. **Task file first.** Don't read the plan unless you must.
@@ -53,11 +39,17 @@ This gap improves future task writing.
 4. **Verify ACs.** Each acceptance criterion is a checkpoint.
 5. **Claim before starting.** Never work unclaimed.
 
-## Key Agent File
+## Fallback: Plan Context
 
-| File | Role |
-|------|------|
-| `agents/worker.md` | Worker agent definition |
+If the task file doesn't contain enough context:
+```
+bw plan read {slug} plan
+```
+
+If you needed plan context, log the gap:
+```
+Warning: Needed plan context: {what was missing from task file}
+```
 
 ## If Blocked
 
