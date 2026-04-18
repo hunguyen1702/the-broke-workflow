@@ -1,0 +1,13 @@
+# bw configuration
+# See: https://github.com/user/the-broke-workflow
+
+models:
+  claude-code:
+    default: sonnet
+    conductor: opus
+    discovery: sonnet
+    analysis: sonnet
+    plan-writer: sonnet
+    splitter: sonnet
+    reviewer: sonnet
+    worker: sonnet
