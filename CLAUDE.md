@@ -45,6 +45,13 @@ bw doctor                     # Check installation
 bw init                       # Initialize .bw structure
 bw install <agent-type>       # Install adapter
 bw config                     # Configure settings
+
+# Step flow (conductor uses these to navigate the plan flow)
+bw step list                  # List all steps as slug names
+bw step show <step> <slug>     # Output conductor instructions (step: number or name)
+bw step agent <step> <slug>    # Output sub-agent instructions
+bw step spawn <step> <slug> --tool <tool>  # Output Agent(...) call with model
+bw step preamble <slug>       # Output conductor rules
 ```
 
 ## Architecture
@@ -126,3 +133,33 @@ Between HALTs, the conductor auto-proceeds by running the next `bw step show` co
 ## Adapter Pattern
 
 Adapters in `adapters/<name>/` provide `/slash-command` integrations for specific agent tools. Each adapter is a thin wrapper that tells the conductor which `bw step` commands to run.
+
+## Model Configuration
+
+Models per agent are configured in `.bw/config.yaml`:
+
+```yaml
+models:
+  claude-code:
+    default: opus
+    conductor: opus
+    discovery: sonnet
+    analysis: sonnet
+    plan-writer: sonnet
+    splitter: sonnet
+    reviewer: sonnet
+    worker: haiku
+
+  codex:
+    default: gpt-5.4
+    discovery: gpt-5.4-mini
+    analysis: gpt-5.4-mini
+    plan-writer: gpt-5.4
+    splitter: gpt-5.4-mini
+    reviewer: gpt-5.4-mini
+    worker: gpt-5.3-codex-spark
+```
+
+**Resolution:** `models.<tool>.<agent>` → exact match. No match → `models.<tool>.default`. No default → no model override (uses tool's natural default).
+
+**`bw step spawn`** outputs the `Agent(...)` call with the correct model for the tool + step. The conductor copies it verbatim.

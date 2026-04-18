@@ -10,12 +10,21 @@ _STEPS_DIR = Path(__file__).resolve().parent.parent.parent / "steps"
 _AGENTS_DIR = Path(__file__).resolve().parent.parent.parent / "agents"
 
 STEP_META = {
-    1: {"file": "step-01-requirements.md", "name": "Requirements", "agent": None},
-    2: {"file": "step-02-discovery.md", "name": "Discovery", "agent": "discovery.md"},
-    3: {"file": "step-03-analysis.md", "name": "Analysis", "agent": "analysis.md"},
-    4: {"file": "step-04-write-plan.md", "name": "Write Plan", "agent": "plan-writer.md"},
-    5: {"file": "step-05-split-tasks.md", "name": "Split Tasks", "agent": "splitter.md"},
-    6: {"file": "step-06-review.md", "name": "Review", "agent": None},
+    1: {"file": "step-01-requirements.md", "name": "Requirements", "slug": "requirements", "agent": None},
+    2: {"file": "step-02-discovery.md", "name": "Discovery", "slug": "discovery", "agent": "discovery.md"},
+    3: {"file": "step-03-analysis.md", "name": "Analysis", "slug": "analysis", "agent": "analysis.md"},
+    4: {"file": "step-04-write-plan.md", "name": "Write Plan", "slug": "write-plan", "agent": "plan-writer.md"},
+    5: {"file": "step-05-split-tasks.md", "name": "Split Tasks", "slug": "split-tasks", "agent": "splitter.md"},
+    6: {"file": "step-06-review.md", "name": "Review", "slug": "review", "agent": None},
+}
+
+# Maps step number to agent name (used for config lookup)
+STEP_AGENTS = {
+    2: "discovery",
+    3: "analysis",
+    4: "plan-writer",
+    5: "splitter",
+    6: "reviewer",
 }
 
 
@@ -66,8 +75,8 @@ def _validate_step(step_num: int) -> dict:
 
 
 def list_steps() -> list[tuple[int, str]]:
-    """Return list of (step_number, name) tuples."""
-    return [(num, meta["name"]) for num, meta in sorted(STEP_META.items())]
+    """Return list of (step_number, slug) tuples."""
+    return [(num, meta["slug"]) for num, meta in sorted(STEP_META.items())]
 
 
 def render_step(step_num: int, slug: str, feature_name: str | None = None) -> str:
@@ -81,13 +90,13 @@ def render_step(step_num: int, slug: str, feature_name: str | None = None) -> st
     content = step_path.read_text()
     content = _render_vars(content, slug, feature_name)
 
-    # Append sub-agent bootstrap command if applicable
+    # Append sub-agent spawn call if applicable
     if meta["agent"]:
         content += (
             "\n\n---\n\n"
             "## Spawn Sub-Agent\n\n"
-            "Give the sub-agent this exact prompt:\n\n"
-            f"> Run `bw step agent {step_num} {slug}` and follow the instructions.\n"
+            "Give the conductor this exact prompt to copy verbatim:\n\n"
+            f"> `bw step spawn {step_num} {slug} --tool {{tool}}`\n"
         )
 
     # Append auto-proceed hint for next step
@@ -116,6 +125,42 @@ def render_agent(step_num: int, slug: str, feature_name: str | None = None) -> s
     agent_path = _agents_dir() / meta["agent"]
     content = agent_path.read_text()
     return _render_vars(content, slug, feature_name)
+
+
+def render_spawn_call(
+    step_num: int,
+    slug: str,
+    tool: str,
+    feature_name: str | None = None,
+) -> str:
+    """Render the Agent tool call for spawning a sub-agent.
+
+    Looks up the model from config for the given tool + step's agent.
+    Returns the Agent(...) call that the conductor copies verbatim.
+    Raises ValueError if the step has no sub-agent.
+    """
+    from bw.core.config import resolve_model
+
+    meta = _validate_step(step_num)
+    if not meta["agent"]:
+        raise ValueError(
+            f"Step {step_num} ({meta['name']}) has no sub-agent. "
+            "The conductor handles this step directly."
+        )
+
+    agent_name = STEP_AGENTS[step_num]
+    model = resolve_model(tool, agent_name)
+    agent_md = _render_vars(
+        (_agents_dir() / meta["agent"]).read_text(), slug, feature_name
+    )
+
+    header = f"## Spawn {agent_name.title()} Agent\n\n```\nAgent(\n  subagent_type=\"{agent_name}\","
+    if model:
+        body = f'\n  model="{model}",\n  prompt="""\n{agent_md}\n""",'
+    else:
+        body = f'\n  prompt=""""\n{agent_md}\n""",'
+    footer = "\n)```"
+    return header + body + footer
 
 
 def render_preamble(slug: str, feature_name: str | None = None) -> str:
