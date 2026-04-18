@@ -1,0 +1,29 @@
+"""bw CLI — the broke workflow toolkit."""
+
+import click
+
+from bw.commands.config_cmd import config
+from bw.commands.doctor_cmd import doctor
+from bw.commands.init_cmd import init
+from bw.commands.install_cmd import install
+from bw.commands.plan_cmd import plan
+from bw.commands.task_cmd import task
+
+
+@click.group()
+@click.version_option(version="0.1.0", prog_name="bw")
+def main():
+    """The Broke Workflow — agent-coding toolkit."""
+    pass
+
+
+main.add_command(config)
+main.add_command(doctor)
+main.add_command(init)
+main.add_command(install)
+main.add_command(plan)
+main.add_command(task)
+
+
+if __name__ == "__main__":
+    main()
