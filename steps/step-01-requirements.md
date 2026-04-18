@@ -4,65 +4,69 @@
 
 ## Goal
 
-Gather goals, outcomes, deliverables, and scope from the user. Establish shared understanding before any analysis begins.
+Understand what the user wants to build. Establish shared understanding before any analysis begins.
 
 ## Rules
 
-- This step is **interactive** — the conductor (main agent) handles it directly.
-- **HALTs** at the end to confirm scope with the user before proceeding.
+- This step is **interactive** — the conductor handles it directly.
+- The user's initial message IS the requirement seed. Don't ask them to repeat it.
+- **No rigid question list.** Analyze what was said, identify gaps, ask targeted follow-ups.
+- **HALTs** at the end to confirm scope before proceeding.
 - After confirmation: calls `bw plan init "<title>"` to create the plan folder.
 
 ## Sequence
 
-### 1. Opening
+### 1. Accept Initial Input
 
-Greet the user and explain what happens next:
+The user has already described what they want (their first message). Acknowledge it and move straight into analysis — no scripted greeting, no "let me ask you a few questions" preamble.
 
-> I'll ask you a few questions to understand what you want to build, then I'll explore the codebase, evaluate options, and create a structured plan. Each step will be handed off to a fresh sub-agent to keep context lean.
+### 2. Analyze Coverage
 
-### 2. Gather Requirements
+Mentally map the user's input against these dimensions:
 
-Ask the following in order. Keep each question focused — no compound questions.
+| Dimension | What it covers | When to ask |
+|-----------|---------------|-------------|
+| **What** | Feature or change being built | Always required — but the user likely already said this |
+| **Why** | Motivation, problem being solved | Ask if the intent is unclear from context |
+| **Boundaries** | What's in/out of scope | Ask if the request is ambiguous or could be interpreted broadly |
+| **Constraints** | Tech restrictions, known blockers | Ask only if there are signals (e.g. mentions of legacy code, deadlines) |
 
-**Q1 — What are you building?**
+Skip dimensions that are obvious from context or not relevant to the task.
 
-> What feature or change are you working on? Describe it in one or two sentences as if explaining to a colleague.
+### 3. Ask Targeted Follow-Ups
 
-**Q2 — What does success look like?**
+If there are gaps, ask 1–2 focused questions. Keep them conversational — no formal "Q1", "Q2" labels. Examples:
 
-> When this is done, what will be different? What specific outcomes or behaviors will exist?
+- "Are you thinking just the API, or the UI as well?"
+- "Should this work with the existing auth, or is that getting replaced too?"
+- "Any parts of the codebase you already know are involved?"
 
-**Q3 — What are the deliverables?**
+After each round of follow-ups, present a running summary and ask:
 
-> What are the major work streams or end products? Think: APIs, UIs, scripts, configs, migrations. Not implementation steps — outputs.
+> Here's what I have so far:
+>
+> {summary}
+>
+> Ready to proceed with discovery, or want to clarify anything else?
 
-**Q4 — What is out of scope?**
+The user controls the depth. Simple tasks may need zero follow-ups. Complex ones may need several rounds.
 
-> What should this explicitly NOT include? What would be a reasonable scope creep that you want to avoid?
+### 4. Confirm
 
-**Q5 — Any constraints?**
-
-> Are there deadlines, team considerations, technology restrictions, or known obstacles?
-
-### 3. Summarize
-
-Present a brief summary:
+Once the user says they're ready, present the final summary:
 
 ```
 ## Scope Confirmed
 
-**Feature:** {Q1 answer}
-**Success:** {Q2 answer}
-**Deliverables:** {Q3 as bullet list}
-**Out of scope:** {Q4 as bullet list}
-**Constraints:** {Q5 or "none stated"}
+**Feature:** {what's being built}
+**Why:** {motivation — omit if obvious}
+**Scope:** {boundaries as bullet list — omit if straightforward}
+**Constraints:** {only if relevant}
 ```
 
-### 4. Confirm
+Only include dimensions that were actually discussed. No "none stated" fillers.
 
-> Does this look right? I'll proceed with discovery — analyzing the codebase and gathering patterns before we evaluate approaches.
-
-**HALTs** — wait for confirmation.
+**HALTs** — wait for final confirmation.
 
 - If user confirms: proceed to Step 2.
 - If user adjusts: update summary and re-present.
@@ -72,7 +76,7 @@ Present a brief summary:
 After confirmation, call:
 
 ```
-bw plan init "<Q1 title>"
+bw plan init "<feature title>"
 ```
 
 This creates `.bw/plans/<slug>/` with plan.md, discovery-report.md, and analysis-report.md templates copied in.

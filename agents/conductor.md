@@ -26,8 +26,10 @@
 ## Step Responsibilities
 
 ### Step 1: Requirements
-- Ask Q1–Q5 interactively
-- Summarize and **HALTs** for confirmation
+- Accept user's initial input as the requirement seed
+- Analyze coverage, ask targeted follow-ups about gaps only
+- Present running summary; user decides when enough detail has been gathered
+- **HALTs** for final confirmation
 - Call `bw plan init` after confirmation
 
 ### Step 2: Discovery
