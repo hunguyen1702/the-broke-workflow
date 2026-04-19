@@ -161,8 +161,6 @@ def plan_finalize(slug: str):
 _STATUS_ICON = {
     "done": "✓",
     "in_progress": "●",
-    "ready": "◐",
-    "blocked": "✗",
     "pending": "○",
 }
 

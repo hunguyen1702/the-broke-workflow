@@ -67,12 +67,10 @@ def get_task(task_id: str) -> tuple[Path, dict]:
     return tf, meta
 
 
-VALID_STATUSES = {"pending", "ready", "in_progress", "blocked", "done"}
+VALID_STATUSES = {"pending", "in_progress", "done"}
 STATUS_TRANSITIONS = {
-    "pending": {"ready", "in_progress", "blocked"},
-    "ready": {"in_progress", "pending"},
-    "in_progress": {"done", "blocked", "pending"},
-    "blocked": {"ready", "pending"},
+    "pending": {"in_progress"},
+    "in_progress": {"done", "pending"},
     "done": set(),
 }
 

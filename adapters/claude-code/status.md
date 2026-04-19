@@ -38,7 +38,7 @@ auth-feature-x7k2/:
   001-add-user-model         [done]       S
   002-add-auth-handlers      [done]       M       blocked_by:001
   003-write-auth-tests       [in_progress] M      @agent-1
-  004-add-session-middleware [ready]      M       blocked_by:002
+  004-add-session-middleware [pending]    M       blocked_by:002
   005-write-integration-tests [pending]    L       blocked_by:004
 
 DAG:

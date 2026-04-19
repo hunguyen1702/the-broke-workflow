@@ -15,7 +15,7 @@ List tasks that are ready to work on: unblocked and unclaimed.
 bw task next [--plan <slug>]
 ```
 
-Shows all tasks with `status: ready` (or `pending` with no blockers).
+Shows all tasks with `status: pending` and no `blocked_by` dependencies.
 
 ## Usage
 

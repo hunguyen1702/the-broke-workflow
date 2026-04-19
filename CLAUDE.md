@@ -39,7 +39,7 @@ bw task list                  # List all tasks (--plan, --status filters)
 bw task next                  # Show ready tasks (unblocked, unclaimed)
 bw task show <id>             # Print a task file
 bw task claim <id> --owner X  # Atomically claim a task
-bw task status <id> <status>   # Update status (pending|in_progress|done|blocked|ready)
+bw task status <id> <status>   # Update status (pending|in_progress|done)
 bw task dag                   # Render task DAG as ASCII (--plan filter)
 bw task deps <id>             # Show blockers and blocks for a task
 bw task release <id>          # Drop claim on a task
@@ -138,7 +138,7 @@ bw plan read {slug} analysis   → .bw/plans/{slug}/analysis-report.md
 
 **Task IDs:** `{plan-slug}/{nnn}-{task-slug}` (e.g. `auth-feature-x7k2/001-add-user-model`)
 
-**Workflow statuses:** `pending` → `in_progress` → `done`, with `blocked` and `ready` as intermediate states.
+**Workflow statuses:** `pending` → `in_progress` → `done`. Blocked state is implicit via `blocked_by` dependencies — no explicit blocked status.
 
 ## Conductor Behavior
 

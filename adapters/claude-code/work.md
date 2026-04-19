@@ -20,7 +20,7 @@ Claim a task atomically and execute it using the task file as the primary brief.
 2. **Read** the task file: `bw task show {id}`
 3. **Read** referenced files (scope section of task file)
 4. **Execute** — work through acceptance criteria
-5. **If blocked**: `bw task block {id} --reason "..."`
+5. **If stuck**: Explain to the user what's blocking you and why.
 6. **If done**: `bw task status {id} done`
 
 ## Usage

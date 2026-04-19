@@ -71,10 +71,7 @@ def task_next(plan_slug: str | None):
         blocked_by = meta.get("blocked_by", [])
 
         # Only ready: status=ready, or pending with no blockers
-        is_ready = (
-            status == "ready"
-            or (status == "pending" and not blocked_by)
-        )
+        is_ready = status == "pending" and not blocked_by
         if not is_ready:
             continue
 
@@ -155,7 +152,7 @@ def task_release(task_id: str):
     new_meta["owner"] = ""
     new_meta["claimed_at"] = ""
     if new_meta.get("status") == "in_progress":
-        new_meta["status"] = "ready"
+        new_meta["status"] = "pending"
     write_file(tf, new_meta, body)
     click.echo(f"Released: {task_id}")
 
@@ -192,21 +189,6 @@ def task_status(task_id: str, new_status: str):
     click.echo(f"{task_id}: {current} -> {new_status}")
 
 
-@task.command("block")
-@click.argument("task_id")
-@click.option("--reason", default="", help="Why it's blocked")
-def task_block(task_id: str, reason: str):
-    """Mark a task as blocked."""
-    try:
-        tf, meta = get_task(task_id)
-    except (FileNotFoundError, ValueError) as e:
-        click.echo(str(e), err=True)
-        raise SystemExit(1)
-
-    new_meta, body = read_file(tf)
-    new_meta["status"] = "blocked"
-    write_file(tf, new_meta, body)
-    click.echo(f"Blocked: {task_id}")
 
 
 @task.command("deps")
@@ -277,26 +259,26 @@ def task_dag(plan_slug: str | None):
             click.echo(f"  {tid} [{status}]{owner}")
 
 
-@task.command("add-edge")
-@click.argument("task_id")
-@click.option("--blocked-by", "blocker_id", required=True, help="Task that blocks this one")
-def task_add_edge(task_id: str, blocker_id: str):
-    """Add a blocked-by dependency."""
+@task.command("add-dependency")
+@click.argument("child_id")
+@click.argument("parent_id")
+def task_add_dependency(child_id: str, parent_id: str):
+    """Add a dependency: child depends on parent (parent must complete first)."""
     try:
-        tf, meta = get_task(task_id)
+        tf, meta = get_task(child_id)
     except (FileNotFoundError, ValueError) as e:
         click.echo(str(e), err=True)
         raise SystemExit(1)
 
     new_meta, body = read_file(tf)
     blocked_by = new_meta.get("blocked_by", [])
-    if blocker_id not in blocked_by:
-        blocked_by.append(blocker_id)
+    if parent_id not in blocked_by:
+        blocked_by.append(parent_id)
         new_meta["blocked_by"] = blocked_by
         write_file(tf, new_meta, body)
-        click.echo(f"Added edge: {task_id} blocked_by {blocker_id}")
+        click.echo(f"Added: {child_id} blocked_by {parent_id}")
     else:
-        click.echo(f"Edge already exists: {task_id} blocked_by {blocker_id}")
+        click.echo(f"Already exists: {child_id} blocked_by {parent_id}")
 
 
 @task.command("remove")
