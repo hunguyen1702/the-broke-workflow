@@ -1,17 +1,9 @@
 <think>
-The user wants me to produce a ONE-LINE summary (max 80 tokens) of the provided knowledge document about CLI Tool Integrations.
+The document is about CLI tool integrations for Claude Code, specifically about slash-commands. Let me identify the core topic and key insight:
 
-Key points from the document:
-- It's about CLI tool integrations architecture
-- Claude Code adapters with slash-commands
-- Codex adapter deferred past MVP
-- Uses adapter pattern
-- Pure Python CLI with no external dependencies
-- Claude Code provides 5 slash-commands: plan, split, next, work, status
-- Codex uses AGENTS.md convention
-- Deployment via bw install command
+Core topic: CLI tool integrations with 6 slash-commands for Claude Code
+Key insight: There are 6 slash-commands (plan, split, next, work, status, product) - the 6th being "product" which was added, increasing from 5 to 6 commands
 
-I need to capture the core topic and key insight in one complete sentence, max 80 tokens.
+Let me create a one-line summary (max 80 tokens):
 
-Let me try:
-"The document describes CLI tool integrations architecture using an adapter pattern: Claude Code adapters provide slash
+"Claude Code has 6 slash-commands (plan, split, next, work, status, product) that integrate with CLI tools, with the product command being the 6th added for a 5-step product plan flow."

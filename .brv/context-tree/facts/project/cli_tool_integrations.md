@@ -1,43 +1,60 @@
 ---
-accessCount: 10
-createdAt: '2026-04-18T04:25:49.854Z'
-importance: 80
-keywords: []
-maturity: validated
-recency: 1
-related: [facts/project/cli_tool_integrations.overview.md]
-summary: Pure Python CLI with Claude Code slash-commands, Codex deferred past MVP using AGENTS.md convention
-tags: []
 title: CLI Tool Integrations
-updatedAt: '2026-04-18T04:25:49.854Z'
+summary: 'Claude Code adapters: plan, split, next, work, status (5) + product (1) = 6 total slash-commands'
+tags: []
+related: [facts/project/cli_tool_integrations.overview.md, facts/project/codex_adapter.md, facts/project/the_broke_workflow_architecture.md]
+keywords: []
+importance: 100
+recency: 1
+maturity: core
+accessCount: 17
+updateCount: 3
+createdAt: '2026-04-18T04:25:49.854Z'
+updatedAt: '2026-04-19T05:28:57.990Z'
 ---
 ## Reason
-Documenting tool integrations architecture - Claude Code and Codex adapters
+Updating CLI tool integrations to reflect 6 commands (added product)
 
 ## Raw Concept
 **Task:**
-Document CLI tool integrations architecture
+Document Claude Code CLI tool integrations with 6 slash-commands
 
 **Changes:**
 - Created Claude Code adapters with slash-commands
 - Planned Codex adapter but deferred past MVP
+- Created Claude Code adapters with 6 slash-commands
+- Added product command for 5-step product plan flow
+- Added Claude Code product command (6th slash-command)
+- Product command runs 5-step product plan flow
+- Added product command to CLI integrations
+- Total commands increased from 5 to 6
 
 **Files:**
 - adapters/claude-code/
 - adapters/codex/README.md
+- adapters/claude-code/plan.md
+- adapters/claude-code/product.md
+- adapters/claude-code/split.md
+- adapters/claude-code/next.md
+- adapters/claude-code/work.md
+- adapters/claude-code/status.md
 
 **Flow:**
 CLI tool -> adapters/ -> Claude Code (slash-commands) / Codex (AGENTS.md)
 
+**Timestamp:** 2026-04-19
+
+**Author:** the-broke-workflow
+
 ## Narrative
 ### Structure
-Tool integrations follow adapter pattern: Claude Code uses skill/command format, Codex uses AGENTS.md convention
+6 Claude Code slash-commands: plan (6-step implementation flow), product (5-step product flow), split, next, work, status
 
 ### Dependencies
 Codex adapter implementation depends on completing MVP first
 
 ### Highlights
-Pure Python CLI with no external dependencies. Claude Code provides 5 slash-commands. Codex deferred until after MVP.
+Plan runs 6-step flow, Product runs 5-step flow, Split breaks into tasks, Next shows next step, Work runs tasks, Status shows progress
 
 ### Rules
 Rule 1: All adapters must be tool-agnostic (shell out to bw CLI)
@@ -45,11 +62,5 @@ Rule 2: Codex agents defined in AGENTS.md must reference prompts in agents/ dire
 Rule 3: Deploy via bw install command with --tool and --scope flags
 
 ## Facts
-- **tool_type**: The tool is a pure Python CLI with no external services [project]
-- **external_dependencies**: No external APIs, databases, or auth providers are used [project]
-- **claude_code_adapter_path**: Claude Code adapters are in adapters/claude-code/ [project]
-- **claude_code_commands**: Claude Code provides slash-commands: plan, split, next, work, status [project]
-- **codex_adapter_path**: Codex adapter is in adapters/codex/ [project]
-- **codex_status**: Codex adapter is deferred past MVP [project]
-- **codex_convention**: Codex uses AGENTS.md files in project root to define agents and commands [project]
-- **codex_deployment**: Codex deployment uses: bw install --tool codex --scope project/global [project]
+- **cli_command_count**: Claude Code has 6 slash-commands [convention]
+- **product_command**: Product command was added as the 6th command [convention]

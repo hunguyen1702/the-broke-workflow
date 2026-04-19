@@ -4,10 +4,10 @@ summary: Codex adapter deferred past MVP, mirrors Claude Code adapter using AGEN
 tags: []
 related: [facts/project/cli_tool_integrations.md]
 keywords: []
-importance: 68
+importance: 83
 recency: 1
 maturity: validated
-accessCount: 6
+accessCount: 11
 createdAt: '2026-04-18T04:28:44.769Z'
 updatedAt: '2026-04-18T04:28:44.769Z'
 ---

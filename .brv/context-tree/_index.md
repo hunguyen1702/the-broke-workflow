@@ -1,92 +1,58 @@
 ---
-children_hash: 5eb359aad11cda39ca6a900c9e25b53745c895ba93af6dbb2841d2b2a48cd0c2
-compression_ratio: 0.9275862068965517
+children_hash: 63f8cb8adc87b56a76056e52fb0b8ee1e60849604899c08f41e17df85987b399
+compression_ratio: 0.4767827529021559
 condensation_order: 3
 covers: [facts/_index.md]
-covers_token_total: 870
+covers_token_total: 1206
 summary_level: d3
-token_count: 807
+token_count: 575
 type: summary
 ---
 <think>
-The user is asking me to create a structural summary at level d1 from the provided knowledge entries. Let me analyze these entries and create a concise summary that preserves key facts, architectural decisions, and relationships while referencing entry names for drill-down.
+The user has asked me to review what I've learned and provide a summary. Looking at the context:
 
-Looking at the context tree structure provided, I can see there are various entries about:
-- CLI tool integrations
-- Codex adapter
-- Project config
-- Task frontmatter fields
-- Task store module
-- Test framework configuration
-- The broke workflow architecture
-- Project config
-- Workflow conventions
+1. The system has provided me with a detailed overview of the "facts/project" domain
+2. It contains information about The Broke Workflow (TBW) architecture, CLI commands, workflow flows, model configuration, and task management
+3. I need to output ONLY the summary text without using any tools
 
-The user wants me to create a d1 level summary. Looking at the structure, d1 would be the domain level (like `facts/project/`). So I need to create a summary that groups these related entries together.
+The user explicitly states this is my "FINAL ITERATION" and wants me to "Summarize your findings and give the best answer you can with the information gathered."
 
-Let me craft a concise, well-structured summary that:
-1. Has a brief overview
-2. Groups related entries into logical sections
-3. Preserves key facts
-4. References entry names for drill-down
-5. Uses proper formatting with headings and bullet points
+Based on the context provided, I should output a clean summary of the facts/project domain. However, I notice there's a "FINAL ITERATION" note which suggests this might be a test or evaluation scenario.
+
+Looking at the content provided in the context, it appears to be a comprehensive overview of the domain. Let me provide a clean summary as requested.
 </think>
 
-# Project Knowledge Summary
+# Facts/Project Domain — Summary
 
-## Overview
+## The Broke Workflow (TBW)
 
-The broke workflow is a pure Python CLI tool providing a 6-step playbook for task planning and execution. It integrates with Claude Code and Codex via adapter patterns, with no external dependencies beyond Python's standard library.
+A CLI tool for AI-augmented product and implementation planning with two distinct workflow flows.
 
-## Architecture
+### Core Architecture
 
-**Core Components:**
-- **CLI Commands** (`bw/commands/`) — plan, task, doctor, init, install, config
-- **Core Modules** (`bw/core/`) — frontmatter, lock, paths, slug, steps, task_store, templates
-- **Agents** (`agents/`) — 6 sub-agents: conductor, discovery, analysis, plan-writer, splitter, worker
-- **Adapters** (`adapters/`) — Claude Code and Codex integrations
+- **bw/core/** — Python modules: frontmatter, lock, paths, slug, task_store, templates
+- **bw/commands/** — CLI commands: plan, task, step, product, doctor, init, install, config
+- **agents/** — Agent definitions for orchestration and task execution
+- **adapters/** — Tool integrations for Claude Code and Codex
 
-**6-Step Playbook:** requirements → discovery → analysis → write-plan → split-tasks → review
+### CLI Command Systems
 
-→ See: `the_broke_workflow_architecture.md`
+- **Product CLI**: `bw product init | list | docs | read | finalize` — manages product plan lifecycle
+- **Step CLI**: `bw step list | show | agent | preamble | spawn` — drives 6-step plan flow
+- **Claude Code**: 6 slash-commands (plan, product, split, next, work, status)
 
-## CLI Tool Integrations
+### Workflow Flows
 
-- **Claude Code**: 5 slash-commands (plan, split, next, work, status) using skill/command format — implemented
-- **Codex**: Uses AGENTS.md convention — deferred past MVP
+- **Plan Flow** (6 steps): requirements → discovery → analysis → write plan → split tasks → review
+- **Product Flow** (5 steps): requirements → summary → milestones → review → present (with HALTs for user approval)
 
-Both shell out to `bw` CLI. Deployment: `bw install --tool <name> --scope project/global`
+### Configuration & Model System
 
-→ See: `cli_tool_integrations.md`, `codex_adapter.md`
+- Python >= 3.10, click >= 8.0, pyyaml >= 6.0
+- Model configuration with resolution order: exact match → tool default → natural default
+- Default override: opus for conductor, sonnet for all others
 
-## Project Configuration
+### Known Gaps
 
-- Python >=3.10, click >=8.0, pyyaml >=6.0
-- Build: setuptools >=68.0 with setuptools-scm for versioning
-- Entry: `bw = bw.cli:main`
-
-→ See: `project_config.md`, `the_broke_workflow_project_config.md`
-
-**Known Gap:** No test framework configured (no pytest in dependencies, no test files)
-
-→ See: `test_framework_configuration.md`
-
-## Task System
-
-**Task ID Format:** `{plan-slug}/{nnn}-{task-slug}` (e.g., `auth-feature-x7k2/001-add-user-model`)
-
-**Frontmatter Fields:** id, title, status, blocked_by, blocks, owner, claimed_at, effort
-
-**Status Machine:** `pending → ready/in_progress → done`, with `blocked` as intermediate state
-
-**Valid Statuses:** pending, ready, in_progress, blocked, done (terminal)
-
-→ See: `task_store_module.md`, `task_frontmatter_fields.md`, `workflow_conventions.md`
-
-## Workflow Conventions
-
-- Python naming: snake_case
-- Sub-agents: receive minimal context (slug, read, write, return instructions only)
-- Context principle: fresh context = lean context
-
-→ See: `workflow_conventions.md`
+- No test framework configured (no pytest dependencies)
+- Codex adapter deferred past MVP

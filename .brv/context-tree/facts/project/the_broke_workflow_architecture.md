@@ -3,10 +3,10 @@ title: The Broke Workflow Architecture
 summary: CLI tool with core modules, commands, agents, adapters, steps playbook, and templates
 tags: []
 keywords: []
-importance: 68
+importance: 86
 recency: 1
-maturity: validated
-accessCount: 6
+maturity: core
+accessCount: 12
 createdAt: '2026-04-18T04:19:02.579Z'
 updatedAt: '2026-04-18T04:19:02.579Z'
 ---

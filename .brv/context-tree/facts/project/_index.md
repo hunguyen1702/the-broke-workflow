@@ -1,76 +1,116 @@
 ---
-children_hash: 71058e31fb3cc9337e69e3c89b2fca4629b25cefb73abedec5f6d085b277d9e9
-compression_ratio: 0.18777180864671272
+children_hash: 5816b73f6c06d814b39c8c89d27cf58e06553bbdb196f1d7d817ebddc9f2bbd6
+compression_ratio: 0.18161468437546635
 condensation_order: 1
-covers: [cli_tool_integrations.md, codex_adapter.md, context.md, project_config.md, task_frontmatter_fields.md, task_store_module.md, test_framework_configuration.md, the_broke_workflow_architecture.md, the_broke_workflow_project_config.md, workflow_conventions.md]
-covers_token_total: 3909
+covers: [bw_config_model_overrides.md, cli_tool_integrations.md, codex_adapter.md, context.md, model_configuration_system.md, product_cli_commands.md, product_flow_architecture.md, product_plan_workflow.md, project_config.md, step_cli_commands.md, task_frontmatter_fields.md, task_store_module.md, test_framework_configuration.md, the_broke_workflow_architecture.md, the_broke_workflow_project_config.md, workflow_conventions.md]
+covers_token_total: 6701
 summary_level: d1
-token_count: 734
+token_count: 1217
 type: summary
 ---
 <think>
-The user wants me to create a structural summary at level d1 from the provided knowledge entries. Let me analyze these entries and create a concise summary that preserves key facts, architectural decisions, and relationships while referencing entry names for drill-down.
+The user wants me to create a structural summary of the provided knowledge entries at level d1 (domain level). I need to consolidate the information from these child entries into a concise overview that preserves key facts, architectural decisions, and relationships.
 
-Key themes I see across these entries:
-1. Project architecture - CLI tool with core modules, commands, agents, adapters
-2. CLI tool integrations - Claude Code (slash-commands) and Codex (deferred)
-3. Project configuration - Python >=3.10, click, pyyaml, known gap: no test framework
-4. Task system - task_store module, frontmatter fields, status transitions
-5. Workflow conventions - task IDs, status machine, sub-agent instructions
+Let me analyze the entries:
 
-Let me create a structured summary that groups these logically and references the entry names.
+1. **Architecture**: the_broke_workflow_architecture.md - CLI tool with core modules, commands, agents, adapters
+2. **Config**: project_config.md, the_broke_workflow_project_config.md - Python >=3.10, click, pyyaml, no tests
+3. **CLI Commands**: 
+   - step_cli_commands.md - bw step CLI (list, show, agent, preamble, spawn)
+   - product_cli_commands.md - bw product CLI (init, list, docs, read, finalize)
+   - cli_tool_integrations.md - Claude Code adapters with 6 slash-commands
+4. **Model Config**: bw_config_model_overrides.md, model_configuration_system.md - model overrides system
+5. **Workflows**: 
+   - product_flow_architecture.md - Two flows: plan (6 steps) and product (5 steps)
+   - product_plan_workflow.md - 5-step CLI-guided product planning
+   - workflow_conventions.md - task IDs, YAML frontmatter, status machine
+6. **Tasks**: task_store_module.md, task_frontmatter_fields.md - task management
+7. **Adapters**: codex_adapter.md - deferred past MVP
+8. **Testing**: test_framework_configuration.md - known gap, no tests
+
+Key relationships:
+- Product flow uses bw product CLI commands
+- Step flow uses bw step CLI commands
+- Claude Code has 6 slash-commands
+- Model config system provides per-tool per-agent overrides
+- Task store handles task scanning and status validation
+
+Let me create a clean structural summary.
 </think>
 
-# The Broke Workflow - Project Summary
+# Domain: facts/project
 
 ## Overview
-The broke workflow is a pure Python CLI tool (no external dependencies) that provides a 6-step playbook for planning and executing tasks. It integrates with Claude Code and Codex via adapter patterns.
+The Broke Workflow (TBW) is a CLI tool for AI-augmented product and implementation planning. It provides two distinct workflow flows managed through a modular architecture of core Python modules, CLI commands, agent definitions, and tool adapters.
 
-## Architecture
+## Core Architecture
 
-The project has 4 main components:
+**Project Structure** (see `the_broke_workflow_architecture.md`):
+- `bw/core/` — Python modules: frontmatter, lock, paths, slug, task_store, templates
+- `bw/commands/` — CLI commands: plan, task, step, product, doctor, init, install, config
+- `agents/` — Agent definitions: conductor, discovery, analysis, plan-writer, splitter, reviewer, worker, product-conductor, milestone-splitter, milestone-reviewer
+- `adapters/` — Tool integrations: claude-code (6 slash-commands), codex (deferred)
 
-- **Core** (`bw/core/`) - Python modules: frontmatter, lock, paths, slug, task_store, templates
-- **Commands** (`bw/commands/`) - CLI commands: plan, task, doctor, init, install, config
-- **Agents** (`agents/`) - 6 agents: conductor, discovery, analysis, plan-writer, splitter, worker
-- **Adapters** (`adapters/`) - Claude Code and Codex integrations
+**Configuration** (see `the_broke_workflow_project_config.md`):
+- Python >= 3.10, click >= 8.0, pyyaml >= 6.0
+- CLI entry: `bw.cli:main`
+- **KNOWN GAP**: No test framework configured
 
-The 6-step playbook: requirements → discovery → analysis → write plan → split tasks → review
+## CLI Command Systems
 
-## CLI Tool Integrations
+**Product CLI** (`product_cli_commands.md`): `bw product init | list | docs | read | finalize`
+- Manages product plan lifecycle (create, query, freeze)
+- Short doc names: requirements → product-plan.md, milestones → milestones.md
 
-See: `cli_tool_integrations.md`, `codex_adapter.md`
+**Step CLI** (`step_cli_commands.md`): `bw step list | show | agent | preamble | spawn`
+- Drives 6-step plan flow execution
+- spawn outputs Agent() calls with model config
 
-- **Claude Code**: Uses skill/command format with 5 slash-commands (plan, split, next, work, status) - implemented
-- **Codex**: Uses AGENTS.md convention - deferred past MVP
+**Claude Code Integration** (`cli_tool_integrations.md`): 6 slash-commands
+- plan (6-step implementation flow)
+- product (5-step product flow)
+- split, next, work, status
 
-Both adapters shell out to the `bw` CLI. Deployment: `bw install --tool <name> --scope project/global`
+## Workflow Flows
 
-## Project Configuration
+**Plan Flow** (`product_flow_architecture.md`): 6 steps, 6 agents
+- requirements → discovery → analysis → write plan → split tasks → review
 
-See: `project_config.md`, `the_broke_workflow_project_config.md`
+**Product Flow** (`product_plan_workflow.md`): 5 steps
+- requirements (JTBD interview) → summary (HALT) → milestones (sub-agent) → review (sub-agent) → present (HALT)
+- Orchestrated by Product Conductor; sub-agents: milestone-splitter, milestone-reviewer
+- Uses HALTs at interactive checkpoints for user approval
 
-- Python >=3.10, click >=8.0, pyyaml >=6.0
-- Build: setuptools >=68.0 with setuptools-scm for versioning
-- Entry: `bw = bw.cli:main`
-- **KNOWN GAP**: No test framework configured (no pytest in dependencies, no test files)
+## Model Configuration
 
-## Task System
+**System** (`model_configuration_system.md`): Resolution order
+1. Exact match: `models.<tool>.<agent>`
+2. Tool default: `models.<tool>.default`
+3. Natural default
 
-See: `task_store_module.md`, `task_frontmatter_fields.md`, `workflow_conventions.md`
+**Overrides** (`bw_config_model_overrides.md`):
+- default: claude-sonnet-4-20250514
+- conductor: opus
+- all others: sonnet
 
-**Task ID format**: `{plan-slug}/{nnn}-{task-slug}` (e.g., `auth-feature-x7k2/001-add-user-model`)
+## Task Management
 
-**Frontmatter fields**: id, title, status, blocked_by, blocks, owner, claimed_at, effort
+**Task Store** (`task_store_module.md`): Python module for scanning and state management
+- Statuses: pending → ready/in_progress → done (blocked is intermediate)
+- Task ID format: `{plan-slug}/{nnn}-{task-slug}`
 
-**Status machine**: `pending → ready/in_progress → done`, with `blocked` as intermediate state
+**Frontmatter Fields** (`task_frontmatter_fields.md`):
+- id, title, status, blocked_by, blocks, owner, claimed_at, effort
 
-**Valid statuses**: pending, ready, in_progress, blocked, done (done is terminal)
+## Key Relationships
 
-## Workflow Conventions
+- Product flow ↔ Product CLI commands (init, read, finalize)
+- Step flow ↔ Step CLI commands (spawn with model config)
+- Claude Code adapter ↔ 6 slash-commands in adapters/claude-code/
+- Codex adapter (deferred) ↔ relies on claude-code as reference
+- Model config ↔ bw step spawn (outputs Agent() with correct model)
 
-See: `workflow_conventions.md`
+## Known Gaps
 
-- Python: snake_case naming
-- Sub-agents: receive minimal context (slug, read, write, return instructions only)
-- Context principle: fresh context = lean context
+- **Testing**: No pytest or test dependencies in pyproject.toml; no test files exist
+- **Codex Adapter**: Deferred past MVP (version 0.1.0)
