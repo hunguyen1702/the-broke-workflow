@@ -3,10 +3,10 @@ title: Test Framework Configuration
 summary: 'Testing gap: pyproject.toml has no pytest or test dependencies, no test files in codebase'
 tags: []
 keywords: []
-importance: 56
+importance: 62
 recency: 1
 maturity: draft
-accessCount: 2
+accessCount: 4
 createdAt: '2026-04-18T04:24:32.706Z'
 updatedAt: '2026-04-18T04:24:32.706Z'
 ---

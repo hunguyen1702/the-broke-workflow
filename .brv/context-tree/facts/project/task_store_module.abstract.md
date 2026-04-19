@@ -1,14 +1,14 @@
 <think>
-I need to produce a one-line summary (max 80 tokens) that captures the core topic and key insight of this knowledge document about the Task Store Module.
+The document describes a Task Store Module in bw/core/task_store.py that provides task scanning, retrieval, status transition validation, and comment management for workflow tasks.
 
-The document is about:
-- Python module called task_store.py
-- It handles task file scanning, state management, and status transition validation
-- Key features: VALID_STATUSES set, STATUS_TRANSITIONS dict, validate_transition() function
-- Task ID format: {plan-slug}/{nnn}-{task-slug}
-- Dependencies on frontmatter and paths modules
-- Valid statuses: pending, ready, in_progress, blocked, done
+Key points:
+- Location: bw/core/task_store.py
+- Functions: scan_tasks, get_task, validate_transition, add_comment, get_comments
+- Valid statuses: pending, in_progress, done
+- Status transitions: pending→in_progress, in_progress→done|pending, done is terminal
+- Task ID format: plan-slug/nnn-task-slug
+- Depends on frontmatter, lock, and paths modules
 
-Core topic: Task Store Module for managing task files and their status transitions
+I need to create a ONE-LINE summary (max 80 tokens) that captures the core topic and key insight.
 
-Key insight: It provides a state machine for task status transitions
+Let me craft this

@@ -4,10 +4,10 @@ summary: 'Two workflow flows: plan flow (6 steps, 6 agents) and product flow (5 
 tags: []
 related: [facts/project/the_broke_workflow_architecture.md]
 keywords: []
-importance: 70
+importance: 76
 recency: 1
 maturity: validated
-accessCount: 5
+accessCount: 7
 updateCount: 1
 createdAt: '2026-04-19T05:24:21.534Z'
 updatedAt: '2026-04-19T05:25:24.617Z'

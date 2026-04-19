@@ -1,78 +1,72 @@
----
-related: [facts/project/cli_tool_integrations.overview.md, facts/project/task_frontmatter_fields.overview.md]
----
 <think>
-The user wants me to produce a structured overview of this knowledge document about the Task Store Module. Let me analyze the document and extract the key information.
+The user wants me to produce a structured overview of the knowledge document about the Task Store Module. Let me analyze the document and extract the key information.
 
-Key entities and concepts:
-- Module: task_store.py in bw/core/
-- Functions: scan_tasks(), get_task(), validate_transition()
-- Constants: VALID_STATUSES, STATUS_TRANSITIONS
-- Dependencies: bw.core.frontmatter, bw.core.paths (find_bw_root, plan_tasks_dir, tasks_dir)
+Key points to include:
+1. Module location and purpose (bw/core/task_store.py)
+2. Core functions: scan_tasks, get_task, validate_transition, add_comment, get_comments
+3. Valid statuses simplified to {pending, in_progress, done}
+4. Status transition rules
+5. Task ID format pattern
+6. Dependencies on other modules
+7. Rules for task management
+
+Structure/Sections:
+- Reason: Documenting task_store.py
+- Raw Concept: Changes and files
+- Narrative: Structure, Dependencies, Highlights, Rules, Examples
+
+Notable entities:
+- Module: bw/core/task_store.py
+- Commands: bw/commands/task_cmd.py
+- Dependencies: bw.core.frontmatter, bw.core.lock, bw.core.paths
+- Functions: scan_tasks, get_task, validate_transition, add_comment, get_comments
+- Valid statuses: pending, in_progress, done
 - Task ID format: {plan-slug}/{nnn}-{task-slug}
-- Frontmatter fields: id, title, status, blocked_by, blocks, owner, effort
 
-Status flow:
-- pending → ready/in_progress → done
-- blocked is intermediate
-- done is terminal (no outgoing transitions)
-
-Valid statuses: pending, ready, in_progress, blocked, done
-
-Rules:
-1. Task ID format: plan/slug
-2. Status transitions must use validate_transition()
-3. done is terminal
-
-Let me structure this properly in markdown with:
-- Key points (3-7 bullets)
-- Structure/sections summary
-- Notable entities, patterns, decisions
+Let me format this as requested - under 1500 tokens, markdown only, no preamble.
 </think>
 
-# Task Store Module Overview
+# Task Store Module
 
 ## Key Points
 
-- **Module**: `bw/core/task_store.py` — handles task file scanning, state management, and status transition validation
-- **Core Functions**: `scan_tasks()` (iterator), `get_task()` (load by ID), `validate_transition()` (transition validation)
-- **Valid Statuses**: `pending`, `ready`, `in_progress`, `blocked`, `done`
-- **Task ID Format**: `{plan-slug}/{nnn}-{task-slug}` (e.g., `auth-feature-x7k2/001-add-user-model`)
-- **Terminal State**: `done` has no outgoing transitions (workflow terminates)
-- **Frontmatter Fields**: id, title, status, blocked_by, blocks, owner, effort
+- **Module location**: `bw/core/task_store.py` provides task scanning, retrieval, validation, and comment management for workflow tasks
+- **Core functions**: `scan_tasks()`, `get_task()`, `validate_transition()`, `add_comment()`, `get_comments()`
+- **Valid statuses simplified** to `pending`, `in_progress`, `done` (removed `ready`, `blocked`)
+- **Status transitions**: `pending→in_progress`, `in_progress→{done,pending}`, `done` is terminal (no outgoing transitions)
+- **Task ID format**: `{plan-slug}/{nnn}-{task-slug}` (e.g., "plan-001/my-task")
+- **Locking required**: Comment writes must acquire locks to prevent race conditions
 
-## Structure / Sections Summary
+## Structure Summary
 
 | Section | Content |
 |---------|---------|
-| **Reason** | Documenting task_store.py with status management and transition validation |
-| **Raw Concept** | Flow: scan_tasks → get_task → validate_transition |
-| **Narrative** | Module structure, dependencies, valid statuses, rules, examples |
-| **Facts** | Task ID format, frontmatter fields, workflow statuses, naming conventions |
+| **Reason** | Documenting task_store.py module |
+| **Raw Concept** | Changes: status simplification, transition rules, task_block→task_add-dependency replacement |
+| **Narrative** | Full module documentation with structure, dependencies, highlights, rules, examples |
 
-## Notable Entities & Patterns
+## Dependencies
 
-**Functions**
-- `scan_tasks(status_filter=None)` — yields task metadata from task files
-- `get_task(task_id)` — loads single task by ID
-- `validate_transition(from_status, to_status)` — validates state machine transitions
+- `bw.core.frontmatter` — `read_file`, `write_file`
+- `bw.core.lock` — `acquire`, `release`
+- `bw.core.paths` — `find_bw_root`, `plan_tasks_dir`, `tasks_dir`
 
-**Constants**
-- `VALID_STATUSES` — set of allowed status strings
-- `STATUS_TRANSITIONS` — dict defining valid from→to status pairs
+## Rules
 
-**Dependencies**
-- `bw.core.frontmatter`
-- `bw.core.paths` (find_bw_root, plan_tasks_dir, tasks_dir)
+1. **Task ID format**: Must be `plan-slug/task-slug`
+2. **Status validation**: Transitions must pass `validate_transition()` before being allowed
+3. **Comment requirements**: Both non-empty `text` and `author` required
+4. **Concurrency**: Lock acquisition required for comment writes
 
-**Rules Enforced**
-1. Task IDs must match `{plan-slug}/{nnn}-{task-slug}` pattern
-2. All status changes must pass through `validate_transition()`
-3. `done` is a terminal state — no transitions out allowed
+## Examples
 
-**Workflow Pattern**
 ```
-pending → ready/in_progress → done
-   ↓         ↓
-  blocked ←─────
+validate_transition("pending", "in_progress") → True
+scan_tasks(status_filter="pending") → yields pending tasks only
 ```
+
+## Related Files
+
+- `bw/core/task_store.py` — main module
+- `bw/commands/task_cmd.py` — command layer
+- `facts/project/the_broke_workflow_project_config.md` — related config

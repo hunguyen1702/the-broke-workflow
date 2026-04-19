@@ -1,40 +1,47 @@
 ---
 title: Product CLI Commands
-summary: 'CLI commands: bw product init, list, docs, read, finalize for product plan lifecycle'
+summary: '9 product subcommands: init, list, docs, read, finalize, plan, status, link, remove'
 tags: []
-related: [facts/project/product_plan_workflow.md, facts/project/cli_tool_integrations.md]
+related: [facts/project/product_plan_workflow.md, facts/project/cli_tool_integrations.md, facts/project/product_plan_workflow.md, facts/project/cli_tool_integrations.md]
 keywords: []
-importance: 56
+importance: 67
 recency: 1
-maturity: draft
-accessCount: 2
+maturity: validated
+accessCount: 4
+updateCount: 1
 createdAt: '2026-04-19T05:24:14.934Z'
-updatedAt: '2026-04-19T05:24:14.934Z'
+updatedAt: '2026-04-19T15:46:08.040Z'
 ---
 ## Reason
-Documenting bw product CLI commands for product plan management
+Update product CLI commands with new link, plan, status, remove commands
 
 ## Raw Concept
 **Task:**
-Product CLI commands for product plan lifecycle management
+Document all bw product CLI commands
+
+**Changes:**
+- Added link command: bw product link <plan_slug> <product_slug> <milestone_n>
+- Added plan command: bw product plan <slug> <milestone_n>
+- Added status command: bw product status <slug> with --json and --details flags
+- Added remove command: bw product remove <slug> with --force flag
 
 **Files:**
 - bw/commands/product_cmd.py
 
 **Flow:**
-init → list/docs/read → finalize
+init → list/docs/read → plan/link → status → finalize/remove
 
 **Timestamp:** 2026-04-19
 
 ## Narrative
 ### Structure
-Commands: init (create plan from templates), list (list all plans), docs (list documents in plan), read (print document), finalize (freeze plan)
+Click-based CLI with 9 subcommands. Each command validates inputs and provides helpful error messages.
 
 ### Dependencies
 Uses bw.core.paths, bw.core.frontmatter, bw.core.slug, bw.core.templates
 
 ### Highlights
-Short doc names: requirements→product-plan.md, milestones→milestones.md
+link: Links existing plan to milestone (3 args). plan: Creates new plan from milestone (2 args). status: Shows progress with optional JSON/detailed output. remove: Safety check prevents accidental deletion of linked plans.
 
 ### Rules
 Rule 1: init requires unique title (fails if exists)
@@ -43,9 +50,6 @@ Rule 3: docs maps friendly names to filenames
 Rule 4: read accepts doc name or filename
 Rule 5: finalize updates status to finalized with date
 
-## Facts
-- **cli_command**: bw product init creates new product plan [project]
-- **cli_command**: bw product list shows all product plans [project]
-- **cli_command**: bw product docs lists documents in a plan [project]
-- **cli_command**: bw product read prints a product document [project]
-- **cli_command**: bw product finalize freezes a product plan [project]
+### Examples
+Example: bw product link my-api-plan my-product 2 → Links my-api-plan to my-product milestone 2
+Example: bw product status my-product --json → Outputs status as JSON for scripting

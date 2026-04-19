@@ -1,74 +1,74 @@
 <think>
-The user wants me to produce a structured overview of this knowledge document about a Product Plan Workflow. Let me extract the key information:
+The user wants me to produce a structured overview of the knowledge document about the Product Plan Workflow. Let me analyze the document and extract the key information.
 
-**Key points (3-7):**
-1. 5-step CLI-guided product planning workflow
-2. Uses JTBD (Jobs-to-be-Done) framework for requirements
-3. Two HALTs (stop points) for user approval - at Summary and Present steps
-4. Sub-agents handle specialized tasks: milestone-splitter and milestone-reviewer
-5. CLI commands: bw product init, bw product read, bw product docs, bw product finalize
-6. Auto-proceeds between steps except at checkpoints
-7. Focus on WHAT not HOW - product planning not implementation
+Key points to include:
+1. It's a CLI-based product planning workflow with 9 subcommands
+2. The workflow has 5 main steps: init, list, docs, read, finalize, plan, status, link, remove
+3. New commands added: link, plan, status, remove
+4. Storage location: .bw/plans/{slug}/
+5. Dependencies on various bw.core modules
+6. Rules about milestones and product management
+7. Helper functions added
 
-**Structure/Sections:**
-- Reason: Documenting the 5-step product planning workflow
-- Raw Concept: Task description, changes, files, flow
-- Narrative: Structure, dependencies, highlights, rules, examples
-- Facts: Key facts about the workflow
+Structure summary:
+- Reason (updates made)
+- Raw Concept (task, changes, files, flow, patterns)
+- Narrative (structure, dependencies, highlights, rules, examples)
+- Facts
 
-**Notable entities, patterns, decisions:**
-- Product Conductor agent (main orchestrator)
-- Milestone-splitter sub-agent
-- Milestone-reviewer sub-agent
-- CLI commands: bw product init, bw product read, bw product docs, bw product finalize
-- HALTs at Summary and Present steps
-- JTBD framework
-- Rules about using CLI commands (never craft file paths, ls, cat)
+Notable entities:
+- CLI commands: init, list, docs, read, finalize, plan, status, link, remove
+- Files: steps/product-step-01-requirements.md, agents/product-conductor.md, bw/commands/product_cmd.py
+- Helper functions: _parse_milestones, _find_linked_plans, _task_counts, _progress_bar
+- Sub-agents: milestone-splitter, milestone-reviewer
+- Patterns: milestone headings, goal extraction
 
-Let me format this in markdown with proper structure.
+Decisions:
+- Products stored in .bw/plans/{slug}/
+- Task progress tracked via frontmatter (done, in_progress, pending)
+- Rules about milestone sequential numbering, product existence before linking, force flag for removal
+
+Let me format this properly in markdown under 1500 tokens.
 </think>
 
 # Product Plan Workflow
 
 ## Key Points
+- **9 CLI subcommands** under `bw product`: `init`, `list`, `docs`, `read`, `finalize`, `plan`, `status`, `link`, `remove`
+- **Storage**: Products stored in `.bw/plans/{slug}/` with `product-plan.md` and `milestones.md` files
+- **New commands added**: `link` (link plan to milestone), `plan` (create plan linked to milestone), `status` (milestone rollup with task progress), `remove` (remove product + linked plans)
+- **Progress tracking**: Task status via frontmatter (`done`, `in_progress`, `pending`) with visual progress bars
+- **Rules enforced**: Sequential milestone numbering (starting at 1), product must exist before linking, `--force` required to remove products with linked plans
 
-- **5-step CLI-guided workflow**: Requirements → Summary → Milestones → Review → Present
-- **JTBD framework**: Requirements step uses Jobs-to-be-Done interview method for gathering user needs
-- **Two HALTs (approval checkpoints)**: At Summary step (user approval) and Present step (finalize decision)
-- **Sub-agents**: milestone-splitter breaks plans into milestones; milestone-reviewer reviews them
-- **CLI commands**: Uses `bw product init`, `bw product read`, `bw product docs`, `bw product finalize` — never craft file paths manually
-- **Auto-proceeds**: Steps flow automatically except at Summary and Present checkpoints
-- **Focus**: Product planning (WHAT to build) not implementation (HOW to build)
+## Structure Summary
 
-## Structure / Sections Summary
+### Raw Concept
+- **Task**: Document CLI-guided 5-step product planning workflow
+- **Files modified**: `steps/product-step-01-requirements.md`, `agents/product-conductor.md`, `bw/commands/product_cmd.py`
+- **Flow**: `product init` → `product plan` → `product status` (with progress tracking)
 
-| Section | Content |
-|---------|---------|
-| **Reason** | Documents the 5-step product planning workflow and CLI commands |
-| **Raw Concept** | Task description, file changes, flow diagram, timestamp |
-| **Narrative** | Full workflow details: structure, dependencies, highlights, rules (8 total), examples |
-| **Facts** | Key fact assertions about steps, methods, commands, and agent roles |
+### Narrative
+- **Implementation**: `bw/commands/product_cmd.py` using Click CLI framework
+- **Dependencies**: `bw.core.frontmatter`, `bw.core.paths`, `bw.core.slug`, `bw.core.task_store`, `bw.core.templates`
+- **Helper functions**: `_parse_milestones`, `_find_linked_plans`, ` _task_counts`, `_progress_bar`
+- **Sub-agents spawned**: `milestone-splitter` (breaks plan into milestones), `milestone-reviewer` (reviews milestones)
 
-## Notable Entities & Patterns
+### Patterns
+- `^## Milestone (\d+):\s*(.+)` — matches milestone headings in milestones.md
+- `\*\*Goal:\*\*\s*(.+)` — extracts goal text from milestone sections
 
-**Agents:**
-- **Product Conductor** — main orchestrator handling the 5-step flow
-- **milestone-splitter** — sub-agent that breaks product plans into milestones
-- **milestone-reviewer** — sub-agent that reviews milestones
+## Notable Entities
 
-**CLI Commands:**
-- `bw product init` — creates plan from templates
-- `bw product read` — reads product requirements
-- `bw product docs` — generates documentation
-- `bw product finalize` — marks plan as finalized
+| Category | Entities |
+|----------|----------|
+| CLI Commands | `init`, `list`, `docs`, `read`, `finalize`, `plan`, `status`, `link`, `remove` |
+| Files | `steps/product-step-01-requirements.md`, `agents/product-conductor.md`, `bw/commands/product_cmd.py` |
+| Storage Paths | `.bw/plans/{slug}/product-plan.md`, `.bw/plans/{slug}/milestones.md` |
+| Sub-agents | `milestone-splitter`, `milestone-reviewer` |
+| Helper Functions | `_parse_milestones`, `_find_linked_plans`, `_task_counts`, `_progress_bar` |
 
-**Key Patterns:**
-- HALTs pause workflow for user interaction (Summary, Present steps)
-- Sub-agents work in fresh context (rule: keep context lean)
-- User's initial message serves as the requirement seed
-- No rigid question lists — analyze gaps and ask targeted follow-ups
-
-**Files Referenced:**
-- `steps/product-step-01-requirements.md`
-- `agents/product-conductor.md`
-- `bw/commands/product_cmd.py`
+## Decisions / Rules
+1. Milestone numbers must be sequential starting from 1
+2. Product plan must exist before linking plans to it
+3. Cannot remove product with linked plans unless `--force` is used
+4. Plan status tracked via task frontmatter (`done`, `in_progress`, `pending`)

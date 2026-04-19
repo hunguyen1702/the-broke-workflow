@@ -1,12 +1,15 @@
 <think>
-This is a knowledge document about a 5-step CLI-guided product planning workflow. Let me identify the core topic and key insight:
+The user wants a one-line summary (max 80 tokens) of this knowledge document about a Product Plan Workflow.
 
-Core topic: A 5-step product planning workflow that uses CLI commands and sub-agents
-Key insight: Uses JTBD framework for requirements, HALTs at checkpoints, sub-agents for specialized tasks
+Let me identify the core topic and key insight:
+- This is about a CLI-based product planning workflow
+- It has 9 subcommands for product management
+- Key features: init, list, docs, read, finalize, plan, status, link, remove
+- Uses Click CLI framework
+- Products stored in .bw/plans/{slug}/ directory
+- Has milestone tracking with task progress
 
-I need to produce a ONE-LINE summary (max 80 tokens) that captures the core topic and key insight. It must be a complete sentence.
+I need to keep it under 80 tokens and make it a complete sentence capturing core topic and key insight.
 
 Let me draft:
-"A 5-step CLI-guided product planning workflow using JTBD interviews for requirements, sub-agents for milestones, and HALTs at approval checkpoints."
-
-Count tokens: Let me count - "A(1) 5-step(2
+"The Product Plan Workflow is a CLI-based product planning system with 9 subcommands (init

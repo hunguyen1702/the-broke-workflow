@@ -1,48 +1,48 @@
 ---
 title: Workflow Conventions
-summary: 'Workflow conventions: task IDs, YAML frontmatter, status machine, sub-agent instructions, lean context principle'
+summary: Workflow conventions with corrected Rule 4 status flow (pending → in_progress → done)
 tags: []
 keywords: []
-importance: 77
+importance: 100
 recency: 1
-maturity: validated
-accessCount: 9
+maturity: core
+accessCount: 14
+updateCount: 2
 createdAt: '2026-04-18T04:20:31.122Z'
-updatedAt: '2026-04-18T04:20:31.122Z'
+updatedAt: '2026-04-19T15:49:31.986Z'
 ---
 ## Reason
-Documenting workflow and coding conventions from task_store context
+Fixing Rule 4 to reflect corrected status model from task_store.py
 
 ## Raw Concept
 **Task:**
-Document workflow and coding conventions used in the broke workflow
+Update workflow_conventions Rule 4
 
 **Changes:**
 - Curated from task_store context with conventions
+- Simplified status model from 5 to 3 statuses
+- Removed ready and blocked as explicit statuses
+- Blocked state now implicit via blocked_by dependencies
+- Corrected Rule 4: Status flow is pending → in_progress → done. Blocked state is implicit via blocked_by deps, no explicit blocked/ready status.
 
 **Files:**
 - bw/core/task_store.py
+- bw/commands/task_cmd.py
 
-**Timestamp:** 2026-04-18
+**Flow:**
+pending → in_progress → done
+
+**Timestamp:** 2026-04-19
 
 ## Narrative
 ### Structure
-Conventions cover: coding style (Python snake_case), task ID format, YAML frontmatter schema, workflow status machine, sub-agent communication pattern
+Task status model defined in bw/core/task_store.py with VALID_STATUSES and STATUS_TRANSITIONS
+
+### Dependencies
+blocked_by field in task frontmatter tracks blockers instead of explicit status
 
 ### Highlights
-Sub-agents: give only slug, what to read, what to write, what to return. Fresh context = lean context.
+VALID_STATUSES: {pending, in_progress, done}; STATUS_TRANSITIONS: pending→{in_progress}, in_progress→{done,pending}, done→{}
 
 ### Rules
-Rule 1: Use snake_case for Python functions and variables
-Rule 2: Task IDs must follow {plan-slug}/{nnn}-{task-slug} format
-Rule 3: YAML frontmatter must include: id, title, status, blocked_by, blocks, owner, effort
-Rule 4: Status flow: pending → ready/in_progress → done, with blocked as intermediate state
-Rule 5: Sub-agents receive minimal context (slug, read, write, return instructions only)
-
-## Facts
-- **naming_convention**: Python uses snake_case for functions and variables [convention]
-- **task_id_format**: Task IDs use format {plan-slug}/{nnn}-{task-slug} (e.g., auth-feature-x7k2/001-add-user-model) [convention]
-- **task_frontmatter_fields**: YAML frontmatter for tasks includes: id, title, status, blocked_by, blocks, owner, effort [convention]
-- **workflow_statuses**: Workflow statuses: pending → ready/in_progress → done, with blocked as intermediate [convention]
-- **sub_agent_instructions**: Sub-agents receive only slug, what to read, what to write, what to return [convention]
-- **context_principle**: Fresh context = lean context - keep context minimal and focused [convention]
+Rule 4: Status flow: pending → in_progress → done. Blocked state is implicit via blocked_by deps, no explicit blocked/ready status.

@@ -1,45 +1,74 @@
 <think>
-The user wants me to produce a structured overview of the knowledge document about Product CLI Commands. Let me analyze the document and extract the key information.
+The user wants me to produce a structured overview of the knowledge document about Product CLI Commands. I need to:
 
-Key points from the document:
-1. Five CLI commands: init, list, docs, read, finalize
-2. Lifecycle flow: init → list/docs/read → finalize
-3. Dependencies on bw.core modules
-4. Rules for each command
-5. Document naming conventions
-6. Related files and workflows
+1. Identify key points (3-7 bullet points)
+2. Summarize the structure/sections
+3. Note any notable entities, patterns, or decisions
+4. Keep it under 1500 tokens
+5. Use markdown formatting
+6. Output only the overview - no preamble
 
-Let me structure this into a clear markdown overview.
+Let me analyze the document:
+
+**Key points:**
+- 9 product subcommands: init, list, docs, read, finalize, plan, status, link, remove
+- Click-based CLI framework
+- Dependencies: bw.core.paths, bw.core.frontmatter, bw.core.slug, bw.core.templates
+- Four new commands added: link, plan, status, remove
+- Flow: init → list/docs/read → plan/link → status → finalize/remove
+
+**Notable entities:**
+- Commands: init, list, docs, read, finalize, plan, status, link, remove
+- Flags: --json, --details, --force
+- Dependencies: bw.core.paths, bw.core.frontmatter, bw.core.slug, bw.core.templates
+- File: bw/commands/product_cmd.py
+- Rules about command behavior
+
+**Patterns/decisions:**
+- Click-based CLI with validation
+- Safety check for remove command to prevent accidental deletion
+- JSON output option for scripting
+- Input validation with helpful error messages
+
+Let me format this as a structured markdown overview.
 </think>
 
 # Product CLI Commands Overview
 
 ## Key Points
 
-- **Five CLI commands** manage the product plan lifecycle: `bw product init`, `list`, `docs`, `read`, and `finalize`
-- **Lifecycle flow**: init → list/docs/read → finalize
-- **Init command**: Creates product plans from templates; requires unique title (fails if duplicate)
-- **List command**: Displays all plans with slug, status, and summary
-- **Finalize command**: Freezes a product plan and records the finalization date
-- **Document mapping**: Friendly names map to filenames (e.g., `requirements` → `product-plan.md`, `milestones` → `milestones.md`)
-- **Core dependencies**: Uses `bw.core.paths`, `bw.core.frontmatter`, `bw.core.slug`, and `bw.core.templates`
+- **9 subcommands total**: `init`, `list`, `docs`, `read`, `finalize`, `plan`, `status`, `link`, `remove`
+- **Four new commands added**: `link`, `plan`, `status`, `remove` (2026-04-19 update)
+- **Click-based CLI framework** with input validation and helpful error messages
+- **Workflow sequence**: `init` → `list/docs/read` → `plan/link` → `status` → `finalize/remove`
+- **Safety mechanisms**: Remove command prevents accidental deletion of linked plans; init fails if title already exists
+- **Dependencies**: Uses `bw.core.paths`, `bw.core.frontmatter`, `bw.core.slug`, `bw.core.templates`
 
 ## Structure / Sections Summary
 
 | Section | Content |
 |---------|---------|
-| **Reason** | Documents CLI commands for product plan management |
-| **Flow** | init → list/docs/read → finalize |
-| **Commands** | init (create), list (show all), docs (list docs), read (print doc), finalize (freeze) |
-| **Dependencies** | Core modules: paths, frontmatter, slug, templates |
-| **Rules** | Five rules governing command behavior (unique titles, output format, name resolution) |
-| **Facts** | Five fact statements defining each CLI command |
+| **Reason** | Documents the update adding 4 new commands |
+| **Raw Concept** | Task description, changes list, file reference (bw/commands/product_cmd.py), flow diagram |
+| **Narrative - Structure** | Click-based CLI with 9 subcommands |
+| **Narrative - Dependencies** | Core modules used |
+| **Narrative - Highlights** | Command specifics (args, flags, safety checks) |
+| **Narrative - Rules** | 5 rules governing command behavior |
+| **Narrative - Examples** | Usage examples for link and status |
 
-## Notable Entities, Patterns, Decisions
+## Notable Entities & Patterns
 
-- **Files**: `bw/commands/product_cmd.py` (implementation location)
-- **Related documents**: `facts/project/product_plan_workflow.md`, `facts/project/cli_tool_integrations.md`
-- **Status tracking**: Plans have a status field that updates to "finalized" upon completion
-- **Slug-based identification**: Plans identified by slug rather than title
-- **Flexible document access**: `read` accepts both friendly names and filenames
-- **Template-based creation**: `init` uses templates from `bw.core.templates`
+**Commands:**
+- `bw product link <plan_slug> <product_slug> <milestone_n>` — Links plan to milestone
+- `bw product plan <slug> <milestone_n>` — Creates new plan from milestone
+- `bw product status <slug>` — Shows progress (supports `--json` and `--details` flags)
+- `bw product remove <slug>` — Removes product (supports `--force` flag)
+
+**Flags:** `--json`, `--details`, `--force`
+
+**Rules:**
+1. `init` requires unique title (fails if exists)
+2. `list` displays slug, status, summary
+3. `docs` maps friendly names to filenames
+4. `read` accepts doc name or filename
+5. `finalize` updates status to finalized with date

@@ -3,10 +3,10 @@ title: Project Config
 summary: 'Project config: Python >=3.10, click & pyyaml deps, bw CLI, NO test framework (known gap)'
 tags: []
 keywords: []
-importance: 86
+importance: 98
 recency: 1
 maturity: core
-accessCount: 7
+accessCount: 11
 updateCount: 3
 createdAt: '2026-04-18T04:21:51.110Z'
 updatedAt: '2026-04-18T04:24:04.003Z'
