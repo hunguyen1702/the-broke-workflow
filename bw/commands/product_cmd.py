@@ -2,6 +2,7 @@
 
 import json as json_mod
 import re
+import shutil
 from collections import defaultdict
 from datetime import date
 from pathlib import Path
@@ -432,3 +433,39 @@ def product_status(slug: str, as_json: bool, details: bool):
     click.echo(
         f"  Overall: {bar} ({milestones_started}/{len(milestones)} milestones started)"
     )
+
+
+@product.command("remove")
+@click.argument("slug")
+@click.option("--force", is_flag=True, help="Remove product plan and all linked plans.")
+def product_remove(slug: str, force: bool):
+    """Remove a product plan and all linked plans."""
+    bw = find_bw_root()
+    pdir = plan_dir(bw, slug)
+    product_file = pdir / "product-plan.md"
+
+    if not product_file.exists():
+        click.echo(f"Product plan not found: {slug}", err=True)
+        raise SystemExit(1)
+
+    # Check for linked plans (dependencies)
+    by_milestone = _find_linked_plans(slug)
+    if by_milestone:
+        click.echo(f"Product plan '{slug}' is linked to plans:")
+        click.echo()
+        for ms_num in sorted(by_milestone):
+            plans = by_milestone[ms_num]
+            click.echo(f"  Milestone {ms_num} ({len(plans)} plan(s)):")
+            for p in plans:
+                click.echo(f"    - {p['slug']} [{p['status']}]")
+        click.echo()
+        click.echo("Use --force to remove the product and all linked plans.")
+        raise SystemExit(1)
+
+    try:
+        shutil.rmtree(pdir)
+    except OSError as e:
+        click.echo(f"Could not remove product directory: {e}", err=True)
+        raise SystemExit(1)
+
+    click.echo(f"Removed product plan: {slug}")

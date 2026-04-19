@@ -297,3 +297,26 @@ def task_add_edge(task_id: str, blocker_id: str):
         click.echo(f"Added edge: {task_id} blocked_by {blocker_id}")
     else:
         click.echo(f"Edge already exists: {task_id} blocked_by {blocker_id}")
+
+
+@task.command("remove")
+@click.argument("task_id")
+@click.option("--force", is_flag=True, help="Remove without confirmation.")
+def task_remove(task_id: str, force: bool):
+    """Remove a task file."""
+    try:
+        tf, _ = get_task(task_id)
+    except (FileNotFoundError, ValueError) as e:
+        click.echo(str(e), err=True)
+        raise SystemExit(1)
+
+    if not force:
+        click.confirm(f"Remove task {task_id}?", abort=True)
+
+    try:
+        tf.unlink()
+    except OSError as e:
+        click.echo(f"Could not remove task file: {e}", err=True)
+        raise SystemExit(1)
+
+    click.echo(f"Removed: {task_id}")

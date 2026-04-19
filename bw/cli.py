@@ -10,6 +10,7 @@ from bw.commands.plan_cmd import plan
 from bw.commands.product_cmd import product
 from bw.commands.step_cmd import step
 from bw.commands.task_cmd import task
+from bw.commands.worktree_cmd import worktree
 
 
 @click.group()
@@ -27,6 +28,7 @@ main.add_command(plan)
 main.add_command(product)
 main.add_command(step)
 main.add_command(task)
+main.add_command(worktree)
 
 
 if __name__ == "__main__":

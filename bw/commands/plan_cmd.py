@@ -1,6 +1,7 @@
 """bw plan — plan lifecycle commands."""
 
 import json as json_mod
+import shutil
 from collections import defaultdict
 from datetime import date
 from pathlib import Path
@@ -252,3 +253,42 @@ def plan_status(slug: str, as_json: bool, details: bool):
             icon = _STATUS_ICON.get(task["status"], "?")
             owner = f" @{task['owner']}" if task.get("owner") else ""
             click.echo(f"    {icon} {task['id']} [{task['status']}]{owner}")
+
+
+@plan.command("remove")
+@click.argument("slug")
+@click.option("--force", is_flag=True, help="Remove plan even with tasks.")
+def plan_remove(slug: str, force: bool):
+    """Remove a plan and its tasks directory."""
+    bw = find_bw_root()
+    pdir = plan_dir(bw, slug)
+    if not pdir.exists():
+        click.echo(f"Plan not found: {slug}", err=True)
+        raise SystemExit(1)
+
+    # Check for tasks (dependencies)
+    tdir = bw / "tasks" / slug
+    task_files = list(tdir.glob("*.md")) if tdir.exists() else []
+
+    if task_files:
+        click.echo(f"Plan '{slug}' has {len(task_files)} tasks:")
+        for tf in sorted(task_files):
+            click.echo(f"  - {tf.stem}")
+        if not force:
+            click.echo()
+            click.echo("Use --force to remove the plan and all its tasks.")
+            raise SystemExit(1)
+
+    try:
+        shutil.rmtree(pdir)
+    except OSError as e:
+        click.echo(f"Could not remove plan directory: {e}", err=True)
+        raise SystemExit(1)
+
+    if tdir.exists():
+        try:
+            shutil.rmtree(tdir)
+        except OSError as e:
+            click.echo(f"Could not remove tasks directory: {e}", err=True)
+
+    click.echo(f"Removed plan: {slug}")
