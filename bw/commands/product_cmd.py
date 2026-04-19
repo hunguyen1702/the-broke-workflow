@@ -108,8 +108,6 @@ def _progress_bar(done: int, total: int, width: int = 12) -> str:
 _STATUS_ICON = {
     "done": "✓",
     "in_progress": "●",
-    "ready": "◐",
-    "blocked": "✗",
     "pending": "○",
 }
 
@@ -433,6 +431,56 @@ def product_status(slug: str, as_json: bool, details: bool):
     click.echo(
         f"  Overall: {bar} ({milestones_started}/{len(milestones)} milestones started)"
     )
+
+
+@product.command("link")
+@click.argument("plan_slug")
+@click.argument("product_slug")
+@click.argument("milestone_n", type=int)
+def product_link(plan_slug: str, product_slug: str, milestone_n: int):
+    """Link an existing plan to a product milestone.
+
+    PLAN_SLUG is the plan to link.
+    PRODUCT_SLUG is the product plan slug.
+    MILESTONE_N is the milestone number to link to (e.g. 1, 2, 3).
+    """
+    bw = find_bw_root()
+
+    # Validate product exists
+    pdir = plan_dir(bw, product_slug)
+    product_file = pdir / "product-plan.md"
+    milestones_file = pdir / "milestones.md"
+    if not product_file.exists():
+        click.echo(f"Product plan not found: {product_slug}", err=True)
+        raise SystemExit(1)
+
+    # Validate milestone exists
+    if not milestones_file.exists():
+        click.echo(f"No milestones.md found for {product_slug}", err=True)
+        raise SystemExit(1)
+
+    milestones = _parse_milestones(milestones_file)
+    target = next((m for m in milestones if m["number"] == milestone_n), None)
+    if not target:
+        nums = ", ".join(str(m["number"]) for m in milestones)
+        click.echo(
+            f"Milestone {milestone_n} not found in {product_slug}. Available: {nums}",
+            err=True,
+        )
+        raise SystemExit(1)
+
+    # Validate plan exists
+    plan_dir_path = plan_dir(bw, plan_slug)
+    plan_file = plan_dir_path / "plan.md"
+    if not plan_file.exists():
+        click.echo(f"Plan not found: {plan_slug}", err=True)
+        raise SystemExit(1)
+
+    # Write the link
+    summary = target["goal"] or target["name"]
+    update_meta(plan_file, product=product_slug, milestone=milestone_n, summary=summary)
+
+    click.echo(f"Plan '{plan_slug}' linked to {product_slug} → Milestone {milestone_n}: {target['name']}")
 
 
 @product.command("remove")
