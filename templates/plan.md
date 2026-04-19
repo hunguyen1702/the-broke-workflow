@@ -5,6 +5,8 @@ status: draft
 created: {date}
 finalized:
 approach:
+product:
+milestone:
 ---
 
 # {title}

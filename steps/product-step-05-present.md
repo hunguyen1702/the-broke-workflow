@@ -77,4 +77,4 @@ After finalization:
 > - Milestones: `bw product read {slug} milestones`
 >
 > To start technical planning for a milestone, use:
-> - `/plan "Milestone 1: {name}"` — or `bw plan init "milestone-name"`
+> - `bw product plan {slug} 1` — creates a plan linked to Milestone 1
