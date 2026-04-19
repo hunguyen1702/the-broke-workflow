@@ -151,12 +151,20 @@ def task_release(task_id: str):
         click.echo(f"Task {task_id} is not claimed.")
         return
 
-    new_meta, body = read_file(tf)
-    new_meta["owner"] = ""
-    new_meta["claimed_at"] = ""
-    if new_meta.get("status") == "in_progress":
-        new_meta["status"] = "pending"
-    write_file(tf, new_meta, body)
+    if not acquire(f"task:{task_id}", "release"):
+        click.echo(f"Could not acquire lock for {task_id}. Try again.")
+        raise SystemExit(1)
+
+    try:
+        new_meta, body = read_file(tf)
+        new_meta["owner"] = ""
+        new_meta["claimed_at"] = ""
+        if new_meta.get("status") == "in_progress":
+            new_meta["status"] = "pending"
+        write_file(tf, new_meta, body)
+    finally:
+        release(f"task:{task_id}")
+
     click.echo(f"Released: {task_id}")
 
 
@@ -186,9 +194,17 @@ def task_status(task_id: str, new_status: str):
         )
         raise SystemExit(1)
 
-    new_meta, body = read_file(tf)
-    new_meta["status"] = new_status
-    write_file(tf, new_meta, body)
+    if not acquire(f"task:{task_id}", "status"):
+        click.echo(f"Could not acquire lock for {task_id}. Try again.")
+        raise SystemExit(1)
+
+    try:
+        new_meta, body = read_file(tf)
+        new_meta["status"] = new_status
+        write_file(tf, new_meta, body)
+    finally:
+        release(f"task:{task_id}")
+
     click.echo(f"{task_id}: {current} -> {new_status}")
 
 
@@ -273,15 +289,22 @@ def task_add_dependency(child_id: str, parent_id: str):
         click.echo(str(e), err=True)
         raise SystemExit(1)
 
-    new_meta, body = read_file(tf)
-    blocked_by = new_meta.get("blocked_by", [])
-    if parent_id not in blocked_by:
-        blocked_by.append(parent_id)
-        new_meta["blocked_by"] = blocked_by
-        write_file(tf, new_meta, body)
-        click.echo(f"Added: {child_id} blocked_by {parent_id}")
-    else:
-        click.echo(f"Already exists: {child_id} blocked_by {parent_id}")
+    if not acquire(f"task:{child_id}", "add-dependency"):
+        click.echo(f"Could not acquire lock for {child_id}. Try again.")
+        raise SystemExit(1)
+
+    try:
+        new_meta, body = read_file(tf)
+        blocked_by = new_meta.get("blocked_by", [])
+        if parent_id not in blocked_by:
+            blocked_by.append(parent_id)
+            new_meta["blocked_by"] = blocked_by
+            write_file(tf, new_meta, body)
+            click.echo(f"Added: {child_id} blocked_by {parent_id}")
+        else:
+            click.echo(f"Already exists: {child_id} blocked_by {parent_id}")
+    finally:
+        release(f"task:{child_id}")
 
 
 @task.command("comment")

@@ -22,8 +22,9 @@ def init():
         "# bw configuration\n# See: https://github.com/user/the-broke-workflow\n"
     )
 
-    # Gitignore worktrees
-    (bw / ".gitignore").write_text("worktrees/\n.lock\n")
+    # Gitignore worktrees and lock files
+    gitignore = bw / ".gitignore"
+    gitignore.write_text("worktrees/\n.locks/\n")
 
     click.echo("Initialized .bw/ project.")
     click.echo("  .bw/plans/    — plan documents")
