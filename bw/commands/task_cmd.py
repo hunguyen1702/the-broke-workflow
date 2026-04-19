@@ -1,5 +1,6 @@
 """bw task — task lifecycle commands."""
 
+import subprocess
 from datetime import datetime
 from pathlib import Path
 
@@ -10,6 +11,8 @@ from bw.core.lock import acquire, release
 from bw.core.paths import find_bw_root, plan_dir, plan_tasks_dir
 from bw.core.task_store import (
     VALID_STATUSES,
+    add_comment,
+    get_comments,
     get_task,
     scan_tasks,
     validate_transition,
@@ -279,6 +282,51 @@ def task_add_dependency(child_id: str, parent_id: str):
         click.echo(f"Added: {child_id} blocked_by {parent_id}")
     else:
         click.echo(f"Already exists: {child_id} blocked_by {parent_id}")
+
+
+@task.command("comment")
+@click.argument("task_id")
+@click.argument("text")
+@click.option("--author", default="", help="Comment author (defaults to git user)")
+def task_comment(task_id: str, text: str, author: str):
+    """Add a comment to a task."""
+    if not author:
+        try:
+            author = (
+                subprocess.check_output(["git", "config", "user.name"], text=True)
+                .strip()
+            )
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            click.echo("Warning: could not determine git user.name, using 'unknown'", err=True)
+            author = "unknown"
+
+    try:
+        comment = add_comment(task_id, text, author)
+        click.echo(f"Comment added to {task_id} by {comment['author']} at {comment['timestamp']}")
+    except (FileNotFoundError, ValueError) as e:
+        click.echo(str(e), err=True)
+        raise SystemExit(1)
+    except Exception as e:
+        click.echo(f"Failed to add comment: {e}", err=True)
+        raise SystemExit(1)
+
+
+@task.command("comments")
+@click.argument("task_id")
+def task_comments(task_id: str):
+    """List comments on a task."""
+    try:
+        comments = get_comments(task_id)
+    except (FileNotFoundError, ValueError) as e:
+        click.echo(str(e), err=True)
+        raise SystemExit(1)
+
+    if not comments:
+        click.echo(f"No comments on {task_id}.")
+        return
+
+    for c in comments:
+        click.echo(f"[{c['timestamp']}] {c['author']}: {c['text']}")
 
 
 @task.command("remove")

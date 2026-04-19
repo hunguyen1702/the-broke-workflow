@@ -1,9 +1,11 @@
 """Task file scanning and state management."""
 
+from datetime import datetime
 from pathlib import Path
 from typing import Iterator
 
-from bw.core.frontmatter import read_file
+from bw.core.frontmatter import read_file, write_file
+from bw.core.lock import acquire, release
 from bw.core.paths import find_bw_root, plan_tasks_dir, tasks_dir
 
 
@@ -80,3 +82,37 @@ def validate_transition(current: str, new: str) -> bool:
     if current == new:
         return True
     return new in STATUS_TRANSITIONS.get(current, set())
+
+
+def add_comment(task_id: str, text: str, author: str) -> dict:
+    """Append a comment to a task's frontmatter. Returns the new comment dict."""
+    if not text or not text.strip():
+        raise ValueError("Comment text cannot be empty")
+    if not author or not author.strip():
+        raise ValueError("Comment author cannot be empty")
+    tf, meta = get_task(task_id)
+    if not acquire(f"task:{task_id}", "comment-writer"):
+        raise RuntimeError(f"Could not acquire lock for task {task_id}")
+    try:
+        new_meta, body = read_file(tf)
+        comments = new_meta.get("comments", [])
+        comment = {
+            "author": author,
+            "timestamp": datetime.now().isoformat(),
+            "text": text,
+        }
+        comments.append(comment)
+        new_meta["comments"] = comments
+        write_file(tf, new_meta, body)
+        return comment
+    finally:
+        release(f"task:{task_id}")
+
+
+def get_comments(task_id: str) -> list[dict]:
+    """Return the list of comments for a task."""
+    _, meta = get_task(task_id)
+    comments = meta.get("comments", [])
+    if not isinstance(comments, list):
+        raise ValueError(f"Task {task_id} has malformed 'comments' field (expected list)")
+    return comments
