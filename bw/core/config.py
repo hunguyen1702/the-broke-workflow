@@ -15,6 +15,9 @@ AGENTS = (
     "splitter",
     "reviewer",
     "worker",
+    "product-conductor",
+    "milestone-splitter",
+    "milestone-reviewer",
 )
 
 
@@ -82,6 +85,9 @@ def default_config() -> dict:
                 "splitter": "sonnet",
                 "reviewer": "sonnet",
                 "worker": "haiku",
+                "product-conductor": "opus",
+                "milestone-splitter": "sonnet",
+                "milestone-reviewer": "sonnet",
             },
         },
     }

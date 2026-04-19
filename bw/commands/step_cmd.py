@@ -3,7 +3,7 @@
 import click
 
 from bw.core.steps import (
-    STEP_META,
+    _get_flow,
     list_steps,
     render_agent,
     render_preamble,
@@ -12,7 +12,7 @@ from bw.core.steps import (
 )
 
 
-def _resolve_step_num(step: str) -> int:
+def _resolve_step_num(step: str, flow: str = "plan") -> int:
     """Convert a step name (slug) or number to a step number.
 
     Accepts '2', 'discovery', 'DISCOVERY', 'write-plan', 'Write-Plan', etc.
@@ -22,11 +22,12 @@ def _resolve_step_num(step: str) -> int:
         return int(step)
     except ValueError:
         pass
-    # Try as step slug
-    name_map = {meta["slug"]: num for num, meta in STEP_META.items()}
+    # Try as step slug — uses _get_flow so invalid flow raises ValueError
+    flow_cfg = _get_flow(flow)
+    name_map = {meta["slug"]: num for num, meta in flow_cfg.step_meta.items()}
     key = step.lower()
     if key not in name_map:
-        valid = ", ".join(sorted(m["slug"] for m in STEP_META.values()))
+        valid = ", ".join(sorted(m["slug"] for m in flow_cfg.step_meta.values()))
         raise KeyError(f"Unknown step: '{step}'. Valid: {valid}")
     return name_map[key]
 
@@ -37,29 +38,39 @@ def step():
     pass
 
 
+_flow_option = click.option(
+    "--flow",
+    default="plan",
+    type=click.Choice(["plan", "product"]),
+    help="Flow type (default: plan).",
+)
+
+
 @step.command("list")
-def step_list():
-    """List all steps in the plan flow."""
-    steps = list_steps()
+@_flow_option
+def step_list(flow: str):
+    """List all steps in the flow."""
+    steps = list_steps(flow)
     click.echo(" ".join(name.lower().replace(" ", "-") for _, name in steps))
 
 
 @step.command("show")
 @click.argument("step")
 @click.argument("slug")
-def step_show(step: str, slug: str):
+@_flow_option
+def step_show(step: str, slug: str, flow: str):
     """Output conductor-level instructions for a step.
 
-    STEP is the step number (1-6) or step name (e.g. discovery, analysis).
+    STEP is the step number or step name (e.g. discovery, milestones).
     SLUG is the plan slug.
     """
     try:
-        step_num = _resolve_step_num(step)
+        step_num = _resolve_step_num(step, flow)
     except (ValueError, KeyError) as e:
         click.echo(str(e), err=True)
         raise SystemExit(1)
     try:
-        output = render_step(step_num, slug)
+        output = render_step(step_num, slug, flow=flow)
     except (FileNotFoundError, ValueError) as e:
         click.echo(str(e), err=True)
         raise SystemExit(1)
@@ -69,20 +80,21 @@ def step_show(step: str, slug: str):
 @step.command("agent")
 @click.argument("step")
 @click.argument("slug")
-def step_agent(step: str, slug: str):
+@_flow_option
+def step_agent(step: str, slug: str, flow: str):
     """Output sub-agent instructions for a step.
 
     The sub-agent runs this command itself to self-bootstrap.
-    STEP is the step number (1-6) or step name (e.g. discovery, analysis).
+    STEP is the step number or step name (e.g. discovery, milestones).
     SLUG is the plan slug.
     """
     try:
-        step_num = _resolve_step_num(step)
+        step_num = _resolve_step_num(step, flow)
     except (ValueError, KeyError) as e:
         click.echo(str(e), err=True)
         raise SystemExit(1)
     try:
-        output = render_agent(step_num, slug)
+        output = render_agent(step_num, slug, flow=flow)
     except (FileNotFoundError, ValueError) as e:
         click.echo(str(e), err=True)
         raise SystemExit(1)
@@ -91,13 +103,14 @@ def step_agent(step: str, slug: str):
 
 @step.command("preamble")
 @click.argument("slug")
-def step_preamble(slug: str):
+@_flow_option
+def step_preamble(slug: str, flow: str):
     """Output conductor preamble (rules and setup).
 
     SLUG is the plan slug.
     """
     try:
-        output = render_preamble(slug)
+        output = render_preamble(slug, flow=flow)
     except FileNotFoundError as e:
         click.echo(str(e), err=True)
         raise SystemExit(1)
@@ -113,19 +126,20 @@ def step_preamble(slug: str):
     type=click.Choice(["claude-code", "codex"]),
     help="Agent tool to spawn for (determines model config).",
 )
-def step_spawn(step: str, slug: str, tool: str):
+@_flow_option
+def step_spawn(step: str, slug: str, tool: str, flow: str):
     """Output the Agent tool call for spawning a sub-agent.
 
-    STEP is the step number (1-6) or step name (e.g. discovery, analysis).
+    STEP is the step number or step name (e.g. discovery, milestones).
     SLUG is the plan slug.
     """
     try:
-        step_num = _resolve_step_num(step)
+        step_num = _resolve_step_num(step, flow)
     except (ValueError, KeyError) as e:
         click.echo(str(e), err=True)
         raise SystemExit(1)
     try:
-        output = render_spawn_call(step_num, slug, tool)
+        output = render_spawn_call(step_num, slug, tool, flow=flow)
     except (FileNotFoundError, ValueError) as e:
         click.echo(str(e), err=True)
         raise SystemExit(1)

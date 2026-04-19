@@ -4,7 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-**the-broke-workflow** is a personal agent-coding workflow toolkit. It runs a 6-step planning process (Requirements → Discovery → Analysis → Write Plan → Split Tasks → Review), using a conductor that delegates heavy work to fresh sub-agents. Plans and tasks are stored as markdown files in `.bw/`.
+**the-broke-workflow** is a personal agent-coding workflow toolkit. It supports two flows:
+- **Plan flow** (6 steps): Requirements → Discovery → Analysis → Write Plan → Split Tasks → Review
+- **Product flow** (5 steps): Requirements → Summary → Milestones → Review → Present
+
+Both use a conductor that delegates heavy work to fresh sub-agents. Plans and tasks are stored as markdown files in `.bw/`.
 
 ## Requirements
 
@@ -52,6 +56,14 @@ bw step show <step> <slug>     # Output conductor instructions (step: number or 
 bw step agent <step> <slug>    # Output sub-agent instructions
 bw step spawn <step> <slug> --tool <tool>  # Output Agent(...) call with model
 bw step preamble <slug>       # Output conductor rules
+# All step commands accept --flow (plan|product) to switch flows (default: plan)
+
+# Product plan lifecycle (5-step flow: requirements → summary → milestones → review → present)
+bw product init "<title>"     # Create a new product plan from templates
+bw product list               # List all product plans
+bw product docs <slug>        # List documents in a product plan
+bw product read <slug> <doc>  # Print a document (requirements|milestones)
+bw product finalize <slug>   # Freeze product plan status
 ```
 
 ## Architecture
@@ -67,30 +79,38 @@ bw step preamble <slug>       # Output conductor rules
     002-<task>.md
   archive/                    # Completed plans archived here
 
-steps/                        # 6-step conductor playbook (content source, read by CLI)
-  step-01-requirements.md
+steps/                        # Conductor playbook (content source, read by CLI)
+  step-01-requirements.md     # Plan flow: 6 steps
   step-02-discovery.md
   step-03-analysis.md
   step-04-write-plan.md
   step-05-split-tasks.md
   step-06-review.md
+  product-step-01-requirements.md  # Product flow: 5 steps
+  product-step-02-summary.md
+  product-step-03-milestones.md
+  product-step-04-review.md
+  product-step-05-present.md
 
 agents/                       # Sub-agent definitions (content source, read by CLI)
-  conductor.md                # Conductor preamble (rules, setup)
+  conductor.md                # Plan conductor preamble (rules, setup)
+  product-conductor.md        # Product conductor preamble
   discovery.md                # Codebase exploration sub-agent
   analysis.md                 # Approach scoring sub-agent
   plan-writer.md              # Plan synthesis sub-agent
   splitter.md                 # Task decomposition sub-agent
+  milestone-splitter.md       # Milestone decomposition sub-agent
+  milestone-reviewer.md       # Milestone review sub-agent
   worker.md                   # Task execution sub-agent
 
 adapters/
   claude-code/                # Claude Code /slash-command integrations
-    plan.md  split.md  next.md  work.md  status.md
+    plan.md  split.md  next.md  work.md  status.md  product.md
   codex/                      # Codex MCP integration
 
 bw/
   core/                       # frontmatter, lock, paths, slug, steps, task_store, templates
-  commands/                   # plan_cmd, step_cmd, task_cmd, config/doctor/init/install
+  commands/                   # plan_cmd, product_cmd, step_cmd, task_cmd, config/doctor/init/install
 
 templates/                    # Shared document templates
   plan.md  discovery-report.md  analysis-report.md  task.md
@@ -149,6 +169,9 @@ models:
     splitter: sonnet
     reviewer: sonnet
     worker: haiku
+    product-conductor: opus
+    milestone-splitter: sonnet
+    milestone-reviewer: sonnet
 
   codex:
     default: gpt-5.4
@@ -158,6 +181,9 @@ models:
     splitter: gpt-5.4-mini
     reviewer: gpt-5.4-mini
     worker: gpt-5.3-codex-spark
+    product-conductor: gpt-5.4
+    milestone-splitter: gpt-5.4-mini
+    milestone-reviewer: gpt-5.4-mini
 ```
 
 **Resolution:** `models.<tool>.<agent>` → exact match. No match → `models.<tool>.default`. No default → no model override (uses tool's natural default).

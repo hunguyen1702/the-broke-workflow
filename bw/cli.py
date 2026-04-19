@@ -7,6 +7,7 @@ from bw.commands.doctor_cmd import doctor
 from bw.commands.init_cmd import init
 from bw.commands.install_cmd import install
 from bw.commands.plan_cmd import plan
+from bw.commands.product_cmd import product
 from bw.commands.step_cmd import step
 from bw.commands.task_cmd import task
 
@@ -23,6 +24,7 @@ main.add_command(doctor)
 main.add_command(init)
 main.add_command(install)
 main.add_command(plan)
+main.add_command(product)
 main.add_command(step)
 main.add_command(task)
 
