@@ -3,110 +3,8 @@
     {
       "order": 3,
       "path": "_index.md",
-      "tokens": 829,
+      "tokens": 1023,
       "type": "summary"
-    },
-    {
-      "order": 2,
-      "path": "facts/_index.md",
-      "tokens": 765,
-      "type": "summary"
-    },
-    {
-      "abstractPath": "facts/project/cli_tool_integrations.abstract.md",
-      "abstractTokens": 155,
-      "importance": 100,
-      "path": "facts/project/cli_tool_integrations.md",
-      "tokens": 155,
-      "type": "context"
-    },
-    {
-      "abstractPath": "facts/project/the_broke_workflow_architecture.abstract.md",
-      "abstractTokens": 178,
-      "importance": 100,
-      "path": "facts/project/the_broke_workflow_architecture.md",
-      "tokens": 178,
-      "type": "context"
-    },
-    {
-      "abstractPath": "facts/project/the_broke_workflow_project_config.abstract.md",
-      "abstractTokens": 159,
-      "importance": 100,
-      "path": "facts/project/the_broke_workflow_project_config.md",
-      "tokens": 159,
-      "type": "context"
-    },
-    {
-      "abstractPath": "facts/project/workflow_conventions.abstract.md",
-      "abstractTokens": 185,
-      "importance": 100,
-      "path": "facts/project/workflow_conventions.md",
-      "tokens": 185,
-      "type": "context"
-    },
-    {
-      "abstractPath": "facts/project/codex_adapter.abstract.md",
-      "abstractTokens": 159,
-      "importance": 98,
-      "path": "facts/project/codex_adapter.md",
-      "tokens": 159,
-      "type": "context"
-    },
-    {
-      "abstractPath": "facts/project/project_config.abstract.md",
-      "abstractTokens": 167,
-      "importance": 98,
-      "path": "facts/project/project_config.md",
-      "tokens": 167,
-      "type": "context"
-    },
-    {
-      "abstractPath": "facts/project/task_store_module.abstract.md",
-      "abstractTokens": 165,
-      "importance": 80,
-      "path": "facts/project/task_store_module.md",
-      "tokens": 165,
-      "type": "context"
-    },
-    {
-      "abstractPath": "facts/project/product_flow_architecture.abstract.md",
-      "abstractTokens": 169,
-      "importance": 76,
-      "path": "facts/project/product_flow_architecture.md",
-      "tokens": 169,
-      "type": "context"
-    },
-    {
-      "abstractPath": "facts/project/product_cli_commands.abstract.md",
-      "abstractTokens": 166,
-      "importance": 67,
-      "path": "facts/project/product_cli_commands.md",
-      "tokens": 166,
-      "type": "context"
-    },
-    {
-      "abstractPath": "facts/project/product_plan_workflow.abstract.md",
-      "abstractTokens": 168,
-      "importance": 67,
-      "path": "facts/project/product_plan_workflow.md",
-      "tokens": 168,
-      "type": "context"
-    },
-    {
-      "abstractPath": "facts/project/test_framework_configuration.abstract.md",
-      "abstractTokens": 170,
-      "importance": 62,
-      "path": "facts/project/test_framework_configuration.md",
-      "tokens": 170,
-      "type": "context"
-    },
-    {
-      "abstractPath": "facts/project/step_cli_commands.abstract.md",
-      "abstractTokens": 170,
-      "importance": 56,
-      "path": "facts/project/step_cli_commands.md",
-      "tokens": 170,
-      "type": "context"
     },
     {
       "importance": 50,
@@ -116,10 +14,34 @@
     },
     {
       "abstractPath": "facts/project/bw_config_model_overrides.abstract.md",
-      "abstractTokens": 161,
+      "abstractTokens": 50,
       "importance": 50,
       "path": "facts/project/bw_config_model_overrides.md",
-      "tokens": 161,
+      "tokens": 50,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/bw_config_module.abstract.md",
+      "abstractTokens": 48,
+      "importance": 50,
+      "path": "facts/project/bw_config_module.md",
+      "tokens": 48,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/bw_steps_module.abstract.md",
+      "abstractTokens": 45,
+      "importance": 50,
+      "path": "facts/project/bw_steps_module.md",
+      "tokens": 45,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/bw_worktree_command.abstract.md",
+      "abstractTokens": 51,
+      "importance": 50,
+      "path": "facts/project/bw_worktree_command.md",
+      "tokens": 51,
       "type": "context"
     },
     {
@@ -128,6 +50,22 @@
       "importance": 50,
       "path": "facts/project/claude_code_work_adapter.md",
       "tokens": 174,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/cli_tool_integrations.abstract.md",
+      "abstractTokens": 42,
+      "importance": 50,
+      "path": "facts/project/cli_tool_integrations.md",
+      "tokens": 42,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/codex_adapter.abstract.md",
+      "abstractTokens": 159,
+      "importance": 50,
+      "path": "facts/project/codex_adapter.md",
+      "tokens": 159,
       "type": "context"
     },
     {
@@ -145,11 +83,59 @@
       "type": "context"
     },
     {
+      "abstractPath": "facts/project/plan_cli_commands.abstract.md",
+      "abstractTokens": 60,
+      "importance": 50,
+      "path": "facts/project/plan_cli_commands.md",
+      "tokens": 60,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/product_cli_commands.abstract.md",
+      "abstractTokens": 166,
+      "importance": 50,
+      "path": "facts/project/product_cli_commands.md",
+      "tokens": 166,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/product_flow_architecture.abstract.md",
+      "abstractTokens": 169,
+      "importance": 50,
+      "path": "facts/project/product_flow_architecture.md",
+      "tokens": 169,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/product_plan_workflow.abstract.md",
+      "abstractTokens": 168,
+      "importance": 50,
+      "path": "facts/project/product_plan_workflow.md",
+      "tokens": 168,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/project_config.abstract.md",
+      "abstractTokens": 167,
+      "importance": 50,
+      "path": "facts/project/project_config.md",
+      "tokens": 167,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/step_cli_commands.abstract.md",
+      "abstractTokens": 38,
+      "importance": 50,
+      "path": "facts/project/step_cli_commands.md",
+      "tokens": 38,
+      "type": "context"
+    },
+    {
       "abstractPath": "facts/project/task_cli_commands.abstract.md",
-      "abstractTokens": 176,
+      "abstractTokens": 48,
       "importance": 50,
       "path": "facts/project/task_cli_commands.md",
-      "tokens": 176,
+      "tokens": 48,
       "type": "context"
     },
     {
@@ -159,15 +145,55 @@
       "path": "facts/project/task_frontmatter_fields.md",
       "tokens": 173,
       "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/task_store_module.abstract.md",
+      "abstractTokens": 165,
+      "importance": 50,
+      "path": "facts/project/task_store_module.md",
+      "tokens": 165,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/test_framework_configuration.abstract.md",
+      "abstractTokens": 170,
+      "importance": 50,
+      "path": "facts/project/test_framework_configuration.md",
+      "tokens": 170,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/the_broke_workflow_architecture.abstract.md",
+      "abstractTokens": 49,
+      "importance": 50,
+      "path": "facts/project/the_broke_workflow_architecture.md",
+      "tokens": 49,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/the_broke_workflow_project_config.abstract.md",
+      "abstractTokens": 159,
+      "importance": 50,
+      "path": "facts/project/the_broke_workflow_project_config.md",
+      "tokens": 159,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/workflow_conventions.abstract.md",
+      "abstractTokens": 185,
+      "importance": 50,
+      "path": "facts/project/workflow_conventions.md",
+      "tokens": 185,
+      "type": "context"
     }
   ],
-  "generated_at": "2026-04-19T15:51:05.703Z",
+  "generated_at": "2026-05-11T02:17:09.573Z",
   "lane_tokens": {
-    "contexts": 2978,
+    "contexts": 2569,
     "stubs": 0,
-    "summaries": 1594
+    "summaries": 1023
   },
-  "source_fingerprint": "8ed34544fd37fd0874b323cd6060a7798a711fbf3fa6328e00056d9129dd5327",
-  "total_tokens": 4572,
+  "source_fingerprint": "44fcc420acb7baf1121c2c33b332fb470bb00e03d1705059aeb3dde71bdc748c",
+  "total_tokens": 3592,
   "version": 1
 }

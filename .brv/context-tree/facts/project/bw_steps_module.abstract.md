@@ -1,0 +1,1 @@
+The bw/core/steps.py module renders step and agent markdown files using template variables, supporting plan (6 steps) and product (5 steps) flows with model-aware spawn commands.

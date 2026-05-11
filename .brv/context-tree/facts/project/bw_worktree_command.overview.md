@@ -1,0 +1,6 @@
+- Implements bw worktree command group with three subcommands: create, list, and remove for managing git worktrees
+- Worktrees are stored under .bw/worktrees/ directory using git worktree with sparse-checkout to exclude .bw/ from worktrees
+- Name validation uses regex ^[A-Za-z0-9][A-Za-z0-9._-]*$, default branch is bw/<name>
+- Main implementation files: bw/commands/worktree_cmd.py (Click group with 3 commands), bw/core/paths.py (worktrees_dir function), bw/cli.py (command registration)
+- Depends on git installed, uses subprocess to shell out to git commands
+- Flow: find_bw_root -> worktrees_dir -> git worktree add/list/remove -> sparse-checkout

@@ -1,0 +1,7 @@
+- Steps module bw/core/steps.py loads step and agent markdown files for step CLI
+- STEP_META defines 6 plan steps: requirements, discovery, analysis, write-plan, split-tasks, review
+- PRODUCT_STEP_META defines 5 product steps: requirements, summary, milestones, review, present
+- FlowMeta maps plan and product flows with their step configurations
+- Template variables: {slug}, {feature_name} for step/agent rendering
+- render_spawn_call generates Agent tool call with resolved model for spawning sub-agents
+- Depends on frontmatter for reading plan metadata and paths for file resolution

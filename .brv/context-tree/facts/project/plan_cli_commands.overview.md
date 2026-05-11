@@ -1,0 +1,7 @@
+- bw plan has 7 subcommands: init, list, docs, read, finalize, remove, status
+- Plan lifecycle: init → read/docs → finalize → status → remove
+- status command shows task progress with progress bar and optional --json output for programmatic/agent use
+- remove command requires --force flag to delete plans that have tasks (checks for dependencies)
+- Two new commands added: status (with --json and --details options) and remove (with --force flag)
+- Rule: plan init requires unique title (slug), plan finalize creates .bw/tasks/{slug}/ directory
+- Dependencies: bw.core.frontmatter, bw.core.paths, bw.core.task_store.scan_tasks

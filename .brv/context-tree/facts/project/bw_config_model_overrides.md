@@ -1,43 +1,40 @@
 ---
 title: BW Config Model Overrides
-summary: 'Model overrides in .bw/config.yaml: default=sonnet, conductor=opus, discovery/analysis/plan-writer/splitter/reviewer/worker=sonnet'
+summary: 'Model overrides in .bw/config.yaml: default=sonnet, conductor=opus, other roles=sonnet. Product flow keys: product-conductor, milestone-splitter, milestone-reviewer. VERIFIED: reviewer key is DEAD - no corresponding agents/reviewer.md file exists.'
 tags: []
+related: []
 keywords: []
-importance: 50
-recency: 1
-maturity: draft
 createdAt: '2026-04-19T05:28:57.986Z'
-updatedAt: '2026-04-19T05:28:57.986Z'
+updatedAt: '2026-05-11T02:06:53.104Z'
 ---
 ## Reason
-Adding .bw/config.yaml model overrides for Claude Code commands
+Verified reviewer key is dead - no agents/reviewer.md file exists, only milestone-reviewer.md
 
 ## Raw Concept
 **Task:**
-Document .bw/config.yaml model overrides for bw CLI
+Document .bw/config.yaml model overrides for bw CLI and verify reviewer key status
 
 **Changes:**
 - Added model overrides for claude-code tool
+- Added product flow model override keys: product-conductor, milestone-splitter, milestone-reviewer
+- Noted reviewer key anomaly: no corresponding agents/reviewer.md file exists
+- Verified reviewer config key is dead code - no agents/reviewer.md exists
+- Only milestone-reviewer.md exists under agents/
 
 **Files:**
 - .bw/config.yaml
 
 **Flow:**
-config loaded by bw CLI on startup
+Config loaded by bw CLI on startup
 
-**Timestamp:** 2026-04-19
+**Timestamp:** 2026-05-11
 
 ## Narrative
 ### Structure
-The .bw/config.yaml provides per-task model overrides. Default model is sonnet, but conductor uses opus for more capable orchestration.
+The .bw/config.yaml provides per-task model overrides. Default model is sonnet, conductor uses opus.
 
 ### Dependencies
 Loaded by bw CLI core config module
 
 ### Highlights
-Model override keys: default, conductor, discovery, analysis, plan-writer, splitter, reviewer, worker
-
-## Facts
-- **default_model**: Default model is claude-sonnet-4-20250514 [project]
-- **conductor_model**: Conductor uses opus model [project]
-- **role_models**: All other roles use sonnet model [project]
+Standard workflow keys: default, conductor, discovery, analysis, plan-writer, splitter, reviewer, worker. Product flow keys: product-conductor, milestone-splitter, milestone-reviewer. VERIFIED 2026-05-11: reviewer key has NO corresponding agents/reviewer.md file - only milestone-reviewer.md exists. The reviewer key in config is DEAD CODE and can be removed.

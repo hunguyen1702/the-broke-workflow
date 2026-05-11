@@ -1,21 +1,18 @@
 ---
 title: Step CLI Commands
-summary: bw step CLI with list, show, agent, preamble, and spawn subcommands
+summary: 'Step CLI: list, show, agent, preamble, spawn commands'
 tags: []
+related: []
 keywords: []
-importance: 56
-recency: 1
-maturity: draft
-accessCount: 2
 createdAt: '2026-04-19T05:27:29.258Z'
-updatedAt: '2026-04-19T05:27:29.258Z'
+updatedAt: '2026-05-11T02:12:49.449Z'
 ---
 ## Reason
-Documenting bw step subcommands for plan flow execution
+Document bw step CLI subcommands
 
 ## Raw Concept
 **Task:**
-Document the step command system in bw/commands/step_cmd.py
+Document bw/commands/step_cmd.py CLI commands
 
 **Changes:**
 - Added step spawn command that outputs Agent() calls with model config
@@ -24,14 +21,19 @@ Document the step command system in bw/commands/step_cmd.py
 - bw/commands/step_cmd.py
 
 **Flow:**
-step command -> _resolve_step_num() -> render_* functions -> output
+_resolve_step_num -> render_* -> click.echo
 
 ## Narrative
 ### Structure
-The step command group provides CLI-driven step and agent instructions. Subcommands: list (show all steps), show (conductor-level instructions), agent (sub-agent instructions), preamble (conductor rules/setup), spawn (Agent tool call with model config).
+5 subcommands: list (show all steps), show (conductor instructions), agent (sub-agent instructions), preamble (conductor rules), spawn (Agent tool call)
 
 ### Dependencies
-Uses bw.core.steps module: _get_flow, list_steps, render_agent, render_preamble, render_spawn_call, render_step
+Depends on bw.core.steps for rendering functions
 
 ### Highlights
-step_spawn requires --tool flag (claude-code or codex) to determine model config. Step resolution accepts both numbers (1-6) and slugs (discovery, analysis, milestones, etc.).
+Accepts step as number or slug (e.g., "2" or "discovery"). --flow flag selects plan or product flow. --tool flag required for spawn to determine model config
+
+## Facts
+- **step_spawn_command**: bw step spawn outputs Agent tool call for spawning sub-agents with model config [project]
+- **step_show_command**: bw step show outputs conductor-level instructions for a step [project]
+- **step_agent_command**: bw step agent outputs sub-agent instructions for self-bootstrap [project]

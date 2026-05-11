@@ -1,0 +1,1 @@
+bw plan CLI has 7 subcommands (init, list, docs, read, finalize, remove, status) following a lifecycle from init through finalize to remove, with status showing task progress via JSON output and remove requiring --force for plans with tasks.

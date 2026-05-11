@@ -1,0 +1,1 @@
+The bw worktree command is a CLI tool for managing git worktrees with create/list/remove subcommands, storing worktrees under .bw/worktrees/ and using sparse-checkout to exclude .bw/ from each worktree.

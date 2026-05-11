@@ -1,0 +1,6 @@
+- Config module bw/core/config.py loads .bw/config.yaml and resolves model overrides for tool+agent combinations
+- Model resolution order: models.&lt;tool&gt;.&lt;agent&gt; → models.&lt;tool&gt;.default → None
+- Default model tiers: opus for conductors, sonnet for workers (discovery/analysis/plan-writer/splitter/reviewer), haiku for simple tasks
+- Provides functions: load_config(), save_config(), resolve_model(), is_configured(), default_config()
+- Supports tool-specific model overrides with agent-level fallback hierarchy
+- Uses yaml for config parsing and bw.core.paths for finding .bw root
