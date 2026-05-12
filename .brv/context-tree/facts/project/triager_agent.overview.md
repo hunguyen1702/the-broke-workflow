@@ -1,0 +1,8 @@
+- Sub-agent located at agents/triager.md with decision tree logic
+- 3-step decision tree: A (scope test) → B (knowledge test) or C (value-stream test)
+- Decision paths: A:single→B:clear/unclear→PLAN; A:multi→C:single-stream→size proxy→PLAN/PRODUCT; A:multi→C:multi-stream→PRODUCT
+- Outputs decision card with Why, Path, Next command
+- Rule 1: Output exactly one decision card
+- Rule 2: Never recommend both flows equally
+- Rule 3: Default to PLAN if idea too sparse
+- Rule 4: Ground Why in concrete signals from idea text

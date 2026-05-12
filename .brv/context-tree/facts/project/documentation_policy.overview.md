@@ -1,0 +1,7 @@
+- Single-source-of-truth policy: CLAUDE.md serves as the canonical detailed guide for CLI surface, epic hierarchy, data model, adapters, config, and tests
+- README.md functions as a short user-facing overview only, not for detailed documentation
+- AGENTS.md contains ByteRover runtime rules and references CLAUDE.md instead of duplicating command lists
+- Three-tier documentation structure: README (overview) → CLAUDE.md (canonical guide) → AGENTS.md (runtime rules)
+- This policy eliminates duplication between documentation files
+- CLAUDE.md covers: CLI commands, epic hierarchy, data model, adapters, config, and tests
+- AGENTS.md maintains ByteRover-specific runtime rules while pointing to CLAUDE.md for command references

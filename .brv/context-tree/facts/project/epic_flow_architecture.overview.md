@@ -1,0 +1,7 @@
+- Epic flow replaces product flow with a canonical hierarchy: Epic -> Milestone -> Plan -> Task
+- CLI command changed from `bw product` to `bw epic` for creating epics
+- Step flow flag changed from `--flow product` to `--flow epic` for workflow execution
+- Model config key renamed to `epic-conductor` for epic-level planning coordination
+- Implementation plans use `epic:` and `milestone:` frontmatter fields to link to parent epic/milestone
+- Epic documents are stored as `.bw/plans/<slug>/epic.md` and `milestones.md`
+- The `bw product` command and `--flow product` support have been completely removed

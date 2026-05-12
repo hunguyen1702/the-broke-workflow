@@ -3,7 +3,19 @@
     {
       "order": 3,
       "path": "_index.md",
-      "tokens": 1023,
+      "tokens": 293,
+      "type": "summary"
+    },
+    {
+      "order": 2,
+      "path": "facts/_index.md",
+      "tokens": 911,
+      "type": "summary"
+    },
+    {
+      "order": 0,
+      "path": "facts/project/codex_adapter/_index.md",
+      "tokens": 85,
       "type": "summary"
     },
     {
@@ -14,10 +26,10 @@
     },
     {
       "abstractPath": "facts/project/bw_config_model_overrides.abstract.md",
-      "abstractTokens": 50,
+      "abstractTokens": 37,
       "importance": 50,
       "path": "facts/project/bw_config_model_overrides.md",
-      "tokens": 50,
+      "tokens": 37,
       "type": "context"
     },
     {
@@ -46,32 +58,46 @@
     },
     {
       "abstractPath": "facts/project/claude_code_work_adapter.abstract.md",
-      "abstractTokens": 174,
+      "abstractTokens": 41,
       "importance": 50,
       "path": "facts/project/claude_code_work_adapter.md",
-      "tokens": 174,
+      "tokens": 41,
       "type": "context"
     },
     {
-      "abstractPath": "facts/project/cli_tool_integrations.abstract.md",
-      "abstractTokens": 42,
+      "abstractPath": "facts/project/codex_adapter/codex_adapter.abstract.md",
+      "abstractTokens": 31,
       "importance": 50,
-      "path": "facts/project/cli_tool_integrations.md",
-      "tokens": 42,
+      "path": "facts/project/codex_adapter/codex_adapter.md",
+      "tokens": 31,
       "type": "context"
     },
     {
       "abstractPath": "facts/project/codex_adapter.abstract.md",
-      "abstractTokens": 159,
+      "abstractTokens": 37,
       "importance": 50,
       "path": "facts/project/codex_adapter.md",
-      "tokens": 159,
+      "tokens": 37,
       "type": "context"
     },
     {
       "importance": 50,
       "path": "facts/project/context.md",
       "tokens": 63,
+      "type": "context"
+    },
+    {
+      "importance": 50,
+      "path": "facts/project/documentation_policy.md",
+      "tokens": 358,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/epic_flow_architecture.abstract.md",
+      "abstractTokens": 43,
+      "importance": 50,
+      "path": "facts/project/epic_flow_architecture.md",
+      "tokens": 43,
       "type": "context"
     },
     {
@@ -108,10 +134,10 @@
     },
     {
       "abstractPath": "facts/project/product_plan_workflow.abstract.md",
-      "abstractTokens": 168,
+      "abstractTokens": 36,
       "importance": 50,
       "path": "facts/project/product_plan_workflow.md",
-      "tokens": 168,
+      "tokens": 36,
       "type": "context"
     },
     {
@@ -148,10 +174,10 @@
     },
     {
       "abstractPath": "facts/project/task_store_module.abstract.md",
-      "abstractTokens": 165,
+      "abstractTokens": 46,
       "importance": 50,
       "path": "facts/project/task_store_module.md",
-      "tokens": 165,
+      "tokens": 46,
       "type": "context"
     },
     {
@@ -164,10 +190,18 @@
     },
     {
       "abstractPath": "facts/project/the_broke_workflow_architecture.abstract.md",
-      "abstractTokens": 49,
+      "abstractTokens": 0,
       "importance": 50,
       "path": "facts/project/the_broke_workflow_architecture.md",
-      "tokens": 49,
+      "tokens": 0,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/the_broke_workflow_cli_features.abstract.md",
+      "abstractTokens": 76,
+      "importance": 50,
+      "path": "facts/project/the_broke_workflow_cli_features.md",
+      "tokens": 76,
       "type": "context"
     },
     {
@@ -179,6 +213,38 @@
       "type": "context"
     },
     {
+      "abstractPath": "facts/project/triage_command.abstract.md",
+      "abstractTokens": 0,
+      "importance": 50,
+      "path": "facts/project/triage_command.md",
+      "tokens": 0,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/triage_command_integration.abstract.md",
+      "abstractTokens": 46,
+      "importance": 50,
+      "path": "facts/project/triage_command_integration.md",
+      "tokens": 46,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/triage_flow.abstract.md",
+      "abstractTokens": 0,
+      "importance": 50,
+      "path": "facts/project/triage_flow.md",
+      "tokens": 0,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/triager_agent.abstract.md",
+      "abstractTokens": 0,
+      "importance": 50,
+      "path": "facts/project/triager_agent.md",
+      "tokens": 0,
+      "type": "context"
+    },
+    {
       "abstractPath": "facts/project/workflow_conventions.abstract.md",
       "abstractTokens": 185,
       "importance": 50,
@@ -187,13 +253,13 @@
       "type": "context"
     }
   ],
-  "generated_at": "2026-05-11T02:17:09.573Z",
+  "generated_at": "2026-05-12T16:40:44.900Z",
   "lane_tokens": {
-    "contexts": 2569,
+    "contexts": 2513,
     "stubs": 0,
-    "summaries": 1023
+    "summaries": 1289
   },
-  "source_fingerprint": "44fcc420acb7baf1121c2c33b332fb470bb00e03d1705059aeb3dde71bdc748c",
-  "total_tokens": 3592,
+  "source_fingerprint": "895c5af9e580de330b8415be98c9f8ebfe5837d9b1f7779b401cb254ede39afb",
+  "total_tokens": 3802,
   "version": 1
 }

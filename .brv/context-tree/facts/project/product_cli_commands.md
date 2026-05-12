@@ -2,7 +2,7 @@
 title: Product CLI Commands
 summary: '9 product subcommands: init, list, docs, read, finalize, plan, status, link, remove'
 tags: []
-related: [facts/project/product_plan_workflow.md, facts/project/cli_tool_integrations.md, facts/project/product_plan_workflow.md, facts/project/cli_tool_integrations.md]
+related: [facts/project/product_plan_workflow.md]
 keywords: []
 importance: 67
 recency: 1

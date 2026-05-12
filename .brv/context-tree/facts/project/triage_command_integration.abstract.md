@@ -1,0 +1,1 @@
+The triage command outputs an Agent(...) call for the conductor to execute without user confirmation, with the triager agent recommending PLAN or PRODUCT flow based on a decision tree.

@@ -1,9 +1,22 @@
 {
-  "curationsSinceDream": 0,
-  "lastDreamAt": "2026-05-11T02:17:09.576Z",
-  "lastDreamLogId": "drm-1778465731120",
+  "curationsSinceDream": 3,
+  "lastDreamAt": "2026-05-12T15:14:00.906Z",
+  "lastDreamLogId": "drm-1778598744878",
   "pendingMerges": [],
-  "staleSummaryPaths": [],
-  "totalDreams": 4,
+  "staleSummaryPaths": [
+    {
+      "enqueuedAt": 1778599127642,
+      "path": "facts/project/the_broke_workflow_cli_features.md"
+    },
+    {
+      "enqueuedAt": 1778602835433,
+      "path": "facts/project/epic_flow_architecture.md"
+    },
+    {
+      "enqueuedAt": 1778604044854,
+      "path": "facts/project/documentation_policy.md"
+    }
+  ],
+  "totalDreams": 6,
   "version": 1
 }

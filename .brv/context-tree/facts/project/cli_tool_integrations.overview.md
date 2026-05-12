@@ -1,7 +1,0 @@
-- Claude Code adapter has exactly 6 slash-commands: /next, /plan, /product, /split, /status, /work
-- Step and worktree are bw CLI native commands (in bw/commands/), not Claude Code adapter slash-commands
-- Adapter files are located in adapters/claude-code/ directory with .md files for each command
-- The product command executes a 5-step product plan flow; plan command runs a 6-step plan flow
-- All adapters must be tool-agnostic, shell out to bw CLI commands (bw task, bw step, bw plan, bw product)
-- Corrected slash-command count from incorrect 9 to actual 6
-- Deploy adapters via bw install command with --tool and --scope flags

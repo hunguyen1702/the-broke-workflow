@@ -1,14 +1,17 @@
 ---
-title: claude_code_work_adapter
-summary: 'Work adapter handles task execution: claim → read task → execute → verify ACs'
+title: Claude Code Work Adapter
+summary: 'Work adapter handles task execution: claim → read task → execute → verify ACs. bw task block removed - use verbal explanation instead.'
 tags: []
-related: []
+related: [facts/project/cli_tool_integrations.md, facts/project/task_store_module.md]
 keywords: []
+importance: 50
+recency: 1
+maturity: draft
 createdAt: '2026-04-19T15:44:13.246Z'
-updatedAt: '2026-05-12T14:56:21.263Z'
+updatedAt: '2026-04-19T15:44:13.246Z'
 ---
 ## Reason
-Strip stale related: reference to deleted cli_tool_integrations
+Documenting Claude Code work adapter for task execution - updating blocked command convention
 
 ## Raw Concept
 **Task:**
@@ -47,3 +50,10 @@ Rule 5: Claim before starting - never work unclaimed
 Usage: /work <task-id>
 Example: /work auth-feature-x7k2/001-add-user-model
 If stuck: Explain to the user what is blocking you and why (do NOT use bw task block)
+
+## Facts
+- **task_block_command**: The bw task block command was removed - use verbal explanation instead [convention]
+- **task_block_pattern**: If stuck on a task, explain to the user what is blocking and why (do not use bw task block) [convention]
+- **task_release_behavior**: bw task release now reverts in_progress status to pending (not to ready) [convention]
+- **work_adapter_purpose**: The work.md adapter documents task claiming and execution flow [project]
+- **work_adapter_steps**: Key steps: claim task, read task file, read scope files, execute work, verify ACs [project]

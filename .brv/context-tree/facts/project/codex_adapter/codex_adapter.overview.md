@@ -1,0 +1,3 @@
+- **Content**: Cleanup document removing stale related: reference to deleted cli_tool_integrations
+- **Status**: Updated - stale reference removed
+- **Note**: This is a minimal update file, main content is in parent directory codex_adapter.md

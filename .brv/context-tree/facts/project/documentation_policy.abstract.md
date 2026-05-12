@@ -1,0 +1,1 @@
+Documentation policy establishing CLAUDE.md as the canonical source for detailed technical guidance, with README.md as a brief overview and AGENTS.md containing runtime rules that reference CLAUDE.md.

@@ -1,0 +1,1 @@
+Epic flow architecture replaces product flow in bw CLI with Epic→Milestone→Plan→Task hierarchy, using 'bw epic' command, --flow epic flag, and epic-conductor model config.

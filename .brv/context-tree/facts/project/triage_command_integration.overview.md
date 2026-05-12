@@ -1,0 +1,7 @@
+- bw triage outputs an Agent(...) call for conductor to execute - does NOT halt for confirmation
+- Flow: User runs "bw triage &lt;idea&gt; --tool &lt;tool&gt;" → detects codebase → renders Agent(...) call → conductor executes triager agent
+- Triage command components: triage_cmd.py (CLI), core/triage.py (renderer), triager.md (agent template)
+- Codebase detection checks for .git/ and code files in current directory
+- Triager agent recommends either PLAN flow (single feature) or PRODUCT flow (multi-stream)
+- Decision tree: Scope test (single vs multi) → Knowledge test (for single) → Value-stream test (for multi)
+- Fully automated - no user confirmation step; conductor receives and runs the triager recommendation verbatim

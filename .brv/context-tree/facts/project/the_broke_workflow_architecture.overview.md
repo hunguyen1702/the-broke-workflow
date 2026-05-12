@@ -1,8 +1,7 @@
-- CLI tool with 9 core modules, 9 CLI commands, and 9 agents (updated from 6 each)
-- 4 main project areas: bw/core/ (modules), bw/commands/ (CLI), agents/ (definitions), adapters/ (integrations)
-- Core modules: frontmatter, lock, paths, slug, task_store, templates, config, steps
-- CLI commands: plan, task, doctor, init, install, config, product, step, worktree
-- Agents include: conductor, discovery, analysis, plan-writer, splitter, worker, product-conductor, milestone-splitter, milestone-reviewer
-- Uses 6-step playbook (requirements → discovery → analysis → write plan → split tasks → review)
-- 5-step product flow (requirements → summary → milestones → review → present)
-- Integrates with Claude Code and Codex adapters
+- 9 core modules: config, frontmatter, lock, paths, slug, steps, task_store, templates, triage
+- 10 CLI commands: config, doctor, init, install, plan, product, step, task, triage, worktree
+- 10 agents: analysis, conductor, discovery, milestone-reviewer, milestone-splitter, plan-writer, product-conductor, splitter, triager, worker
+- Architecture integrates with Claude Code and Codex adapters
+- Triage is the new one-shot flow router classifying ideas between PLAN and PRODUCT
+- Updated counts reflect additions: product-conductor, milestone-splitter, milestone-reviewer, config.py, steps.py
+- Idea flow: user idea → triage → plan/product workflow

@@ -1,0 +1,1 @@
+The Broke Workflow CLI provides 10 commands (config, doctor, init, install, plan, product, step, task, triage, worktree) supporting a two-track workflow system: a 6-step plan flow and a 5-step product flow, with features like task dependency DAGs, claim/release mechanisms, and sparse checkout worktrees.

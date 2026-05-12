@@ -1,7 +1,7 @@
-- Model overrides in .bw/config.yaml: default=sonnet, conductor=opus, other roles=sonnet
-- Product flow keys defined: product-conductor, milestone-splitter, milestone-reviewer
-- VERIFIED (2026-05-11): reviewer key is dead code - no corresponding agents/reviewer.md file exists
-- Only milestone-reviewer.md exists under agents/ directory
-- Config loaded by bw CLI on startup via core config module
-- Standard workflow keys: default, conductor, discovery, analysis, plan-writer, splitter, reviewer, worker
-- Document recommends reviewer key in config can be removed as dead code
+- Model overrides refreshed for Claude Code - reviewer model changed from "dead" (2026-05-11) to active "sonnet"
+- Triager agent added with haiku model assignment (new role)
+- Total of 9 agent model assignments defined in config
+- Anomaly identified: reviewer key exists in config but no corresponding agents/reviewer.md file exists (only milestone-reviewer.md)
+- Model overrides defined under models.claude-code in .bw/config.yaml
+- All 9 assignments: default(sonnet), conductor(opus), discovery(sonnet), analysis(sonnet), plan-writer(sonnet), splitter(sonnet), reviewer(sonnet), worker(sonnet), triager(haiku)
+- Used by bw config module to resolve per-agent model selection at runtime

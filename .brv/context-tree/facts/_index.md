@@ -1,105 +1,42 @@
 ---
-children_hash: c175d7c688b3f0473dca6e231c66a69a176612921b54809113c12b62ab9d31b3
-compression_ratio: 0.8280507131537242
+children_hash: 225bcb1fcd06905e954c711370387d82ceef93cc66066056d74e5f5b9f6ee55b
+compression_ratio: 0.5904082955281919
 condensation_order: 2
 covers: [context.md, project/_index.md]
-covers_token_total: 1262
+covers_token_total: 1543
 summary_level: d2
-token_count: 1045
+token_count: 911
 type: summary
 ---
 <think>
-The user wants me to create a structural summary at the domain level (d1) from the provided child entries. Looking at the content, this is a comprehensive project documentation for "the-broke-workflow" - a Python CLI tool.
+The user wants me to create a structural summary at level d1 (domain level) for "facts/project". I need to preserve key facts, architectural decisions, and relationships while compressing the content significantly (to ~20-30% of the original token count).
 
-Let me analyze the child entries and create a condensed structural summary:
+Looking at the context, this is a "curate" command where I'm creating or updating a summary file. The summary should:
+1. Be at the domain level (facts/project)
+2. Preserve key facts
+3. Be compressed (~20-30% of original)
+4. Include architectural decisions and relationships
 
-Key themes:
-1. **Architecture**: 9 core modules, 9 CLI commands, 9 agents
-2. **CLI Commands**: plan, task, product, step, worktree commands
-3. **Workflows**: Plan flow (6 steps), Product flow (5 steps)
-4. **Task Model**: 3 statuses, task IDs with plan-slug/nnn-task-slug format
-5. **Configuration**: Model config system with per-tool per-agent overrides
-6. **Adapters**: Claude Code (6 commands), Codex (deferred)
-7. **Gaps**: No test framework, dead config key
+I need to output this as a JSON tool call for a UPSERT operation.
 
-I need to create a summary that:
-- Targets ~20-30% compression
-- Preserves key facts about architecture, commands, and relationships
-- References entry names for drill-down
-- Uses clean structured markdown
-- Is written from the domain's perspective (not "this document covers")
+Let me construct the summary based on the comprehensive information provided in the context. This is level d1 (domain summary), so I should reference child entries but not duplicate their content.
+
+The key information to preserve:
+- 9 core modules, 10 CLI commands, 10 agents
+- Two workflow flows (Plan and Product)
+- Model configuration system
+- Key CLI commands (plan, product, task, step, worktree, triage)
+- Triage system (decision tree)
+- Task store (statuses, transitions, frontmatter)
+- Known gaps (testing, codex adapter)
+- Project config (Python ≥3.10, click≥8.0, pyyaml≥6.0)
+
+This needs to be a compact but comprehensive summary that captures the essence of the entire project.
 </think>
 
-# Domain: The Broke Workflow Project
 
-## Overview
-The broke workflow (bw) is a Python CLI tool for workflow and task management, with adapters for Claude Code and Codex AI assistants.
-
-## Architecture
-
-**Core Components:**
-- **9 Core Modules** in `bw/core/`: frontmatter, lock, paths, slug, task_store, templates, config, steps, paths
-- **9 CLI Commands**: plan, task, doctor, init, install, config, product, step, worktree
-- **9 Agents**: conductor, discovery, analysis, plan-writer, splitter, worker, product-conductor, milestone-splitter, milestone-reviewer
-- **2 Adapters**: Claude Code (6 slash-commands), Codex (deferred past MVP)
-
-**Details**: See `the_broke_workflow_architecture.md`, `the_broke_workflow_project_config.md`
-
-## CLI Commands
-
-### Task Commands (12 subcommands)
-`add-dependency`, `claim`, `comment`, `comments`, `dag`, `deps`, `list`, `next`, `release`, `remove`, `show`, `status`
-
-### Plan Commands (7 subcommands)
-`init`, `list`, `docs`, `read`, `finalize`, `status`, `remove`
-
-### Product Commands (9 subcommands)
-`init`, `list`, `docs`, `read`, `finalize`, `plan`, `status`, `link`, `remove`
-
-### Step Commands (5 subcommands)
-`list`, `show`, `agent`, `preamble`, `spawn`
-
-### Worktree Commands (3 subcommands)
-`create`, `list`, `remove`
-
-**Details**: See `task_cli_commands.md`, `plan_cli_commands.md`, `product_cli_commands.md`, `step_cli_commands.md`, `bw_worktree_command.md`
-
-## Workflow Flows
-
-**Plan Flow**: 6 steps (requirements → discovery → analysis → write-plan → split-tasks → review)
-
-**Product Flow**: 5 steps (requirements → summary → milestones → review → present), managed by product-conductor agent with milestone-splitter and milestone-reviewer sub-agents
-
-**Details**: See `product_flow_architecture.md`, `product_plan_workflow.md`
-
-## Task Model
-
-**Status Flow**: `pending → in_progress → done` (simplified from 5 to 3 statuses)
-- Blocked state is implicit via `blocked_by` dependencies
-- Task IDs: `{plan-slug}/{nnn}-{task-slug}`
-
-**Details**: See `task_store_module.md`, `workflow_conventions.md`, `task_frontmatter_fields.md`
-
-## Configuration
-
-- **Model Config**: `.bw/config.yaml` with per-tool per-agent overrides
-- **Resolution Order**: `models.<tool>.<agent>` → `models.<tool>.default` → tool default
-- **Default Models**: opus for conductors, sonnet for workers, haiku for simple tasks
-- **Config Module**: `bw/core/config.py` provides `load_config()`, `resolve_model()`
-
-**Details**: See `bw_config_module.md`, `model_configuration_system.md`, `bw_config_model_overrides.md`
-
-## Adapters
-
-**Claude Code Adapter**: 6 slash-commands (`/next`, `/plan`, `/product`, `/split`, `/status`, `/work`)
-
-**Codex Adapter**: Deferred past MVP
-
-**Details**: See `cli_tool_integrations.md`, `codex_adapter.md`, `claude_code_work_adapter.md`
-
-## Known Gaps
-
-- **No test framework**: pyproject.toml lacks pytest/test dependencies, no test files exist
-- **Dead code**: `reviewer` config key has no corresponding `agents/reviewer.md` file (only `milestone-reviewer.md` exists)
-
-**Details**: See `project_config.md`, `test_framework_configuration.md`, `bw_config_model_overrides.md`
+[TOOL_CALL]
+{tool => "code_exec", args => {
+  --code "// Curate facts/project domain summary at d1 level\n(async () => {\n  const result = await tools.curate([{\n    type: 'UPSERT',\n    path: 'facts/project',\n    title: 'The Broke Workflow',\n    reason: 'Creating domain-level summary for project facts',\n    summary: 'CLI workflow manager with 9 modules, 10 commands, 10 agents. PLAN (6 steps) and PRODUCT (5 steps) flows, triage router, task store.',\n    content: {\n      rawConcept: {\n        task: 'Domain summary for The Broke Workflow project',\n        flow: 'triage → PLAN/PRODUCT → agents → steps → tasks',\n        files: ['.bw/config.yaml', 'pyproject.toml', 'bw/cli.py', 'bw/core/*.py'],\n        timestamp: '2025-05-12',\n        author: 'Hung Nguyen'\n      },\n      narrative: {\n        structure: '9 core modules (config, frontmatter, lock, paths, slug, steps, task_store, templates, triage) + 10 CLI commands + 10 agents',\n        highlights: 'Two flows: Plan (requirements→discovery→analysis→write-plan→split→review) and Product (requirements→summary→milestones→review→present)',\n        dependencies: 'Python ≥3.10, click≥8.0, pyyaml≥6.0',\n        rules: 'Triage: one-shot router (scope test → knowledge/value-stream test) → Agent() call for conductor. Task states: pending→in_progress→done (terminal)'\n      },\n      relations: [\n        'facts/project/bw_config_module.md',\n        'facts/project/task_store_module.md',\n        'facts/project/triage_command.md',\n        'facts/project/plan_cli_commands.md',\n        'facts/project/product_cli_commands.md',\n        'facts/project/task_cli_commands.md',\n        'facts/project/step_cli_commands.md',\n        'facts/project/triager_agent.md',\n        'facts/project/the_broke_workflow_architecture.md'\n      ]\n    },\n    domainContext: {\n      purpose: 'Project-specific facts: configuration, CLI commands, agents, workflows, and technical decisions',\n      scope: {\n        included: ['CLI commands and subcommands', 'Agent configurations', 'Workflow flows', 'Module architecture', 'Task store schema', 'Triage decision logic', 'Project dependencies'],\n        excluded: ['User-specific preferences', 'External integrations beyond adapters']\n      }\n    }\n  }]);\n  console.log(JSON.stringify(result, null, 2));\n})()"
+}}
+[/TOOL_CALL]

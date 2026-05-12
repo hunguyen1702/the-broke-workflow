@@ -1,0 +1,1 @@
+This document is a cleanup entry noting removal of a stale reference to a deleted file in the Codex adapter documentation.

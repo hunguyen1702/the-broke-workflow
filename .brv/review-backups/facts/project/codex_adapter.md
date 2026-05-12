@@ -1,14 +1,18 @@
 ---
-title: codex_adapter
+title: Codex Adapter
 summary: Codex adapter deferred past MVP, mirrors Claude Code adapter using AGENTS.md conventions
 tags: []
-related: []
+related: [facts/project/cli_tool_integrations.md]
 keywords: []
+importance: 98
+recency: 1
+maturity: core
+accessCount: 16
 createdAt: '2026-04-18T04:28:44.769Z'
-updatedAt: '2026-05-12T14:56:21.258Z'
+updatedAt: '2026-04-18T04:28:44.769Z'
 ---
 ## Reason
-Strip stale related: reference to deleted cli_tool_integrations
+Documenting the deferred Codex adapter implementation
 
 ## Raw Concept
 **Task:**
@@ -46,3 +50,9 @@ Rule 4: Only implement after MVP complete
 ### Examples
 Example deployment: bw install --tool codex --scope project
 Example agent reference in AGENTS.md: See adapters/claude-code/ for porting reference
+
+## Facts
+- **codex_adapter_status**: Codex adapter is deferred past MVP [project]
+- **project_version**: Project version is 0.1.0 (early stage) [project]
+- **code_quality_gap**: No linting or testing configured [project]
+- **codex_convention**: Codex uses AGENTS.md files for agent configuration [project]

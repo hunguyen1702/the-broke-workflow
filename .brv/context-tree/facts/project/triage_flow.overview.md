@@ -1,0 +1,7 @@
+- Triage is a one-shot flow router that classifies user ideas into PLAN or PRODUCT workflows
+- Uses only two inputs: raw user idea and has_codebase flag (boolean)
+- Decision tree has 3 tests: A (scope), B (knowledge for single), C (value-stream for multi)
+- Signals: PLAN=fix/add/refactor, PRODUCT=MVP/launch/phase/platform
+- Codebase detection requires .git directory AND code files (.py, .ts, .js, .go, .rs, etc.)
+- Four rules govern behavior: one card only, ground Why in signals, never equal weight, default to PLAN for sparse ideas
+- Output is Agent(...) call copied verbatim by conductor

@@ -1,0 +1,7 @@
+- CLI command: `bw triage <idea> --tool <claude-codex|codex>` using Click framework
+- Renders Agent(...) call for triager sub-agent that conductor copies verbatim
+- Dependencies: resolve_model (config.py), read_agent_file (steps.py)
+- Codebase detection: .git/ directory must exist AND source files outside build/cache dirs
+- --tool option is required, must be claude-code or codex
+- Files added: triage.py, triage_cmd.py, triager.md, config.py updates, steps.py helper, CLI integration
+- Flow: idea input -> detect codebase -> render triager agent call

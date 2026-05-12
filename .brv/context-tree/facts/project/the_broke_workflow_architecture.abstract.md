@@ -1,1 +1,0 @@
-The-broke-workflow is a CLI tool with 9 core modules, 9 CLI commands, and 9 agents organized into four main areas: core Python modules, CLI commands, agent definitions, and integration adapters.

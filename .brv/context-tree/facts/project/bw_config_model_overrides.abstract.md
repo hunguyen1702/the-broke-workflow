@@ -1,1 +1,1 @@
-The .bw/config.yaml defines model overrides for Broke Workflow tasks, defaulting to sonnet and using opus for conductor; the reviewer config key is dead code since no agents/reviewer.md file exists.
+Configuration refresh updating Claude Code model overrides with 9 agent assignments, confirming reviewer alive as sonnet and adding triager as haiku.

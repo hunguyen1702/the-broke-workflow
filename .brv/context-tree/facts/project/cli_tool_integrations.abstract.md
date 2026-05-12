@@ -1,1 +1,0 @@
-Claude Code adapter provides 6 slash-commands (next, plan, product, split, status, work) that map to bw CLI commands, while step and worktree are native bw CLI commands.
