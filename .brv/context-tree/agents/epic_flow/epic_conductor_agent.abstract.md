@@ -1,0 +1,1 @@
+Epic Conductor orchestrates a 5-step flow (requirements → summary → milestones → review → present) and spawns milestone-splitter and milestone-reviewer sub-agents.

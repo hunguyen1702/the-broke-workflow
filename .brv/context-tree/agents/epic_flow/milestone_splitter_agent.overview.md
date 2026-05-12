@@ -1,0 +1,6 @@
+- Breaks epic requirements into 3-6 shippable milestones with clear ordering and scoping
+- Input: plan slug + title; Output: .bw/plans/{slug}/milestones.md with milestone frontmatter
+- Each milestone must be independently shippable (standalone value), ordered (no later dependencies), and scoped (clear include/exclude)
+- Sizing guidance: 3-7 days ideal, merge if under 1 day, split if over 2 weeks
+- Rules: count 3-6, shippable standalone, no forward dependencies, clear deferred items, order by dependency/priority, front-load high-value/risk items
+- Writes output to milestones.md file in plan directory

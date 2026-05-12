@@ -1,0 +1,6 @@
+- Decision tree classifier: determines PLAN (single feature) vs EPIC (multi-stream/milestone) flow
+- Uses has_codebase flag to distinguish real repo from greenfield projects
+- Three-stage decision: scope test (single/multi) → knowledge test (clear/unclear, if single) → value-stream test (multi/single-stream, if multi)
+- PLAN signals: fix, add, refactor, specific file/module names; EPIC signals: MVP, launch, phase, roadmap, platform, multiple subsystems
+- Output: strict decision card format with Why (grounded in signals), Path, Next command
+- Rules: one card only, ground Why in signals, never recommend both equally, default to PLAN if empty, don't ask clarifying questions

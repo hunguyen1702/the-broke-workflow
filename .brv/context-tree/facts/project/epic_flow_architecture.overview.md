@@ -1,7 +1,20 @@
-- Epic flow replaces product flow with a canonical hierarchy: Epic -> Milestone -> Plan -> Task
-- CLI command changed from `bw product` to `bw epic` for creating epics
-- Step flow flag changed from `--flow product` to `--flow epic` for workflow execution
-- Model config key renamed to `epic-conductor` for epic-level planning coordination
-- Implementation plans use `epic:` and `milestone:` frontmatter fields to link to parent epic/milestone
-- Epic documents are stored as `.bw/plans/<slug>/epic.md` and `milestones.md`
-- The `bw product` command and `--flow product` support have been completely removed
+- Epic flow is 5-step milestone planning: Requirements -> Summary -> Milestones -> Review -> Present -> finalize
+- Managed by epic-conductor agent, delegates to milestone-splitter and milestone-reviewer sub-agents
+- Hard-renamed from product flow to epic flow throughout codebase
+- CLI: bw epic init/read/finalize/plan/link commands
+- Canonical hierarchy: Epic -> Milestone -> Plan -> Task
+- Document storage: .bw/plans/<slug>/epic.md and milestones.md
+- Milestone-splitter breaks work into shippable phases; milestone-reviewer reviews milestone plans
+- Step flow parameter: --flow epic (not product)
+
+**Structure/Sections:**
+- Reason (create/update epic flow architecture replacing old product flow)
+- Raw Concept (changes, files, flow)
+- Narrative (Structure, Dependencies, Highlights)
+- Facts (epic_flow_steps, sub_agents, document_access conventions)
+
+**Notable Entities:**
+- Sub-agents: milestone-splitter, milestone-reviewer, epic-conductor
+- Files: bw/commands/epic_cmd.py, templates/epic.md, agents/epic-conductor.md
+- Steps: Requirements (JTBD), Summary (user review/HALTs), Milestones, Review, Present
+- Document access: bw epic read {slug} requirements|milestones

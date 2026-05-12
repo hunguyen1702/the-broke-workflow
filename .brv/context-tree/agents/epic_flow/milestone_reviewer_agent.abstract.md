@@ -1,0 +1,1 @@
+Milestone Reviewer Agent performs adversarial review of milestones using a 5-category checklist covering coverage, standalone value, ordering, sizing, and gaps.

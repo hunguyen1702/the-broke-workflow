@@ -1,0 +1,1 @@
+EpicFlowCliTests class contains 7 unittest methods using Click CliRunner to test epic lifecycle commands end-to-end.

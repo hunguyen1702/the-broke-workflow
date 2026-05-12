@@ -1,0 +1,1 @@
+The Broke Workflow is a Python Click CLI with plan-flow (6-step) for single features and epic-flow (5-step) for multi-stream milestone planning, using triage to route between them.

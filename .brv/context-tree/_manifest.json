@@ -19,6 +19,38 @@
       "type": "summary"
     },
     {
+      "abstractPath": "agents/epic_flow/epic_conductor_agent.abstract.md",
+      "abstractTokens": 41,
+      "importance": 50,
+      "path": "agents/epic_flow/epic_conductor_agent.md",
+      "tokens": 41,
+      "type": "context"
+    },
+    {
+      "abstractPath": "agents/epic_flow/milestone_reviewer_agent.abstract.md",
+      "abstractTokens": 40,
+      "importance": 50,
+      "path": "agents/epic_flow/milestone_reviewer_agent.md",
+      "tokens": 40,
+      "type": "context"
+    },
+    {
+      "abstractPath": "agents/epic_flow/milestone_splitter_agent.abstract.md",
+      "abstractTokens": 35,
+      "importance": 50,
+      "path": "agents/epic_flow/milestone_splitter_agent.md",
+      "tokens": 35,
+      "type": "context"
+    },
+    {
+      "abstractPath": "agents/plan_flow/triager_agent.abstract.md",
+      "abstractTokens": 33,
+      "importance": 50,
+      "path": "agents/plan_flow/triager_agent.md",
+      "tokens": 33,
+      "type": "context"
+    },
+    {
       "importance": 50,
       "path": "facts/context.md",
       "tokens": 55,
@@ -34,10 +66,10 @@
     },
     {
       "abstractPath": "facts/project/bw_config_module.abstract.md",
-      "abstractTokens": 48,
+      "abstractTokens": 37,
       "importance": 50,
       "path": "facts/project/bw_config_module.md",
-      "tokens": 48,
+      "tokens": 37,
       "type": "context"
     },
     {
@@ -87,17 +119,35 @@
       "type": "context"
     },
     {
+      "abstractPath": "facts/project/documentation_policy.abstract.md",
+      "abstractTokens": 50,
       "importance": 50,
       "path": "facts/project/documentation_policy.md",
-      "tokens": 358,
+      "tokens": 50,
       "type": "context"
     },
     {
       "abstractPath": "facts/project/epic_flow_architecture.abstract.md",
-      "abstractTokens": 43,
+      "abstractTokens": 0,
       "importance": 50,
       "path": "facts/project/epic_flow_architecture.md",
-      "tokens": 43,
+      "tokens": 0,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/epic_flow_cli_tests.abstract.md",
+      "abstractTokens": 29,
+      "importance": 50,
+      "path": "facts/project/epic_flow_cli_tests.md",
+      "tokens": 29,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/project/epic_rename_product_to_epic.abstract.md",
+      "abstractTokens": 50,
+      "importance": 50,
+      "path": "facts/project/epic_rename_product_to_epic.md",
+      "tokens": 50,
       "type": "context"
     },
     {
@@ -142,10 +192,10 @@
     },
     {
       "abstractPath": "facts/project/project_config.abstract.md",
-      "abstractTokens": 167,
+      "abstractTokens": 39,
       "importance": 50,
       "path": "facts/project/project_config.md",
-      "tokens": 167,
+      "tokens": 39,
       "type": "context"
     },
     {
@@ -182,18 +232,18 @@
     },
     {
       "abstractPath": "facts/project/test_framework_configuration.abstract.md",
-      "abstractTokens": 170,
+      "abstractTokens": 38,
       "importance": 50,
       "path": "facts/project/test_framework_configuration.md",
-      "tokens": 170,
+      "tokens": 38,
       "type": "context"
     },
     {
       "abstractPath": "facts/project/the_broke_workflow_architecture.abstract.md",
-      "abstractTokens": 0,
+      "abstractTokens": 45,
       "importance": 50,
       "path": "facts/project/the_broke_workflow_architecture.md",
-      "tokens": 0,
+      "tokens": 45,
       "type": "context"
     },
     {
@@ -214,10 +264,10 @@
     },
     {
       "abstractPath": "facts/project/triage_command.abstract.md",
-      "abstractTokens": 0,
+      "abstractTokens": 45,
       "importance": 50,
       "path": "facts/project/triage_command.md",
-      "tokens": 0,
+      "tokens": 45,
       "type": "context"
     },
     {
@@ -253,13 +303,13 @@
       "type": "context"
     }
   ],
-  "generated_at": "2026-05-12T16:40:44.900Z",
+  "generated_at": "2026-05-12T17:16:52.804Z",
   "lane_tokens": {
-    "contexts": 2513,
+    "contexts": 2209,
     "stubs": 0,
     "summaries": 1289
   },
-  "source_fingerprint": "895c5af9e580de330b8415be98c9f8ebfe5837d9b1f7779b401cb254ede39afb",
-  "total_tokens": 3802,
+  "source_fingerprint": "d146a086bf0af3129393b32f60be1f91bc74b3b88dcc46bdf0c8bf667c602413",
+  "total_tokens": 3498,
   "version": 1
 }

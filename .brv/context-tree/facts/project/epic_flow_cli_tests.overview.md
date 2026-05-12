@@ -1,0 +1,7 @@
+- EpicFlowCliTests class contains 7 unittest test methods for CLI regression coverage
+- Tests cover: epic init, epic plan, epic status, plan status, step flow, top-level help, and epic subcommands
+- Uses Click CliRunner.invoke() for end-to-end CLI command testing
+- Verifies plan status uses epic key (not legacy product key)
+- Test command: `python -m unittest tests.test_epic_flow -v`
+- Dependencies: click.testing.CliRunner, unittest, json, pathlib
+- Author: meowso

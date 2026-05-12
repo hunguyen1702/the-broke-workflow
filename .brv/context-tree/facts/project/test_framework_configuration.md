@@ -1,51 +1,54 @@
 ---
 title: Test Framework Configuration
-summary: 'Testing gap: pyproject.toml has no pytest or test dependencies, no test files in codebase'
+summary: 'Testing: unittest-based tests exist in tests/test_epic_flow.py (7 tests), no pytest dependency'
 tags: []
+related: [facts/project/project_config.md]
 keywords: []
-importance: 62
-recency: 1
-maturity: draft
-accessCount: 4
 createdAt: '2026-04-18T04:24:32.706Z'
-updatedAt: '2026-04-18T04:24:32.706Z'
+updatedAt: '2026-05-12T17:11:40.425Z'
 ---
 ## Reason
-Documenting known gap: no test framework configured in pyproject.toml
+Update to reflect unittest tests now exist in tests/test_epic_flow.py
 
 ## Raw Concept
 **Task:**
-Document testing configuration gap in the_broke_workflow project
+Document testing configuration with unittest-based regression tests
 
 **Changes:**
 - Identified missing test framework configuration
+- Added unittest-based regression tests in tests/test_epic_flow.py
+- Test command: python -m unittest tests.test_epic_flow -v
+- No pytest dependency in pyproject.toml (optional gap)
 
 **Files:**
 - pyproject.toml
+- tests/test_epic_flow.py
+- CLAUDE.md
 
 **Flow:**
-Analysis revealed no test dependencies in pyproject.toml
+Tests use Click CliRunner for integration testing of CLI commands
 
-**Timestamp:** 2026-04-18
+**Timestamp:** 2026-05-12
 
 **Author:** meowso
 
 ## Narrative
 ### Structure
-pyproject.toml contains build-system and project configuration but lacks test dependencies
+unittest-based CLI integration tests in tests/ directory
 
 ### Dependencies
-Requires pytest or unittest to be added to dependencies
+Python stdlib unittest, click.testing.CliRunner
 
 ### Highlights
-No test framework configured - this is a known gap that needs to be addressed
+7 tests in EpicFlowCliTests class covering epic CLI commands. Uses isolated_filesystem() for test isolation.
 
 ### Rules
-Rule 1: Add pytest to dependencies for testing
-Rule 2: Add pytest configuration to pyproject.toml
-Rule 3: Create test directory structure
+Rule 1: Tests must pass before merging
+Rule 2: Run: python -m unittest tests.test_epic_flow -v
 
 ## Facts
-- **test_framework**: No test framework configured in pyproject.toml [project]
-- **test_dependencies**: No pytest or test dependencies found [project]
-- **test_files**: No test files found in codebase [project]
+- **test_framework**: Test framework: unittest (Python stdlib) [project]
+- **test_files**: Test file exists: tests/test_epic_flow.py [project]
+- **test_count**: Test count: 7 tests [project]
+- **test_command**: Test command: python -m unittest tests.test_epic_flow -v [project]
+- **pytest_dependency**: No pytest dependency in pyproject.toml [project]

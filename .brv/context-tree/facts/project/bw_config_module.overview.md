@@ -1,6 +1,6 @@
-- Config module bw/core/config.py loads .bw/config.yaml and resolves model overrides for tool+agent combinations
-- Model resolution order: models.&lt;tool&gt;.&lt;agent&gt; → models.&lt;tool&gt;.default → None
-- Default model tiers: opus for conductors, sonnet for workers (discovery/analysis/plan-writer/splitter/reviewer), haiku for simple tasks
-- Provides functions: load_config(), save_config(), resolve_model(), is_configured(), default_config()
-- Supports tool-specific model overrides with agent-level fallback hierarchy
-- Uses yaml for config parsing and bw.core.paths for finding .bw root
+- AGENTS tuple defines 11 agents: conductor, discovery, analysis, plan-writer, splitter, reviewer, worker, epic-conductor, milestone-splitter, milestone-reviewer, triager
+- Current active agents: epic-conductor, milestone-splitter, milestone-reviewer, triager (product-conductor removed)
+- resolve_model() supports tool+agent model override with fallback chain: models.<tool>.<agent> -> models.<tool>.default -> None
+- default_config() provides Anthropic model defaults (opus, sonnet, haiku)
+- Uses yaml and bw.core.paths.find_bw_root for configuration loading
+- Flow: load_config -> resolve_model -> is_configured

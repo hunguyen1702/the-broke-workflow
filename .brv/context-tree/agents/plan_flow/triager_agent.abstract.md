@@ -1,0 +1,1 @@
+Triager Agent classifies user ideas into PLAN or EPIC flow using a decision tree based on scope, knowledge, and value-stream tests.

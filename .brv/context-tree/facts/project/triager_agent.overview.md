@@ -1,8 +1,18 @@
-- Sub-agent located at agents/triager.md with decision tree logic
-- 3-step decision tree: A (scope test) → B (knowledge test) or C (value-stream test)
-- Decision paths: A:single→B:clear/unclear→PLAN; A:multi→C:single-stream→size proxy→PLAN/PRODUCT; A:multi→C:multi-stream→PRODUCT
-- Outputs decision card with Why, Path, Next command
-- Rule 1: Output exactly one decision card
-- Rule 2: Never recommend both flows equally
-- Rule 3: Default to PLAN if idea too sparse
-- Rule 4: Ground Why in concrete signals from idea text
+- Triager agent classifies ideas using decision tree: A (scope test) -> B (knowledge test for single) or C (value-stream test for multi)
+- Outputs recommendation as PLAN flow or EPIC flow with grounded reasoning
+- EPIC flow recommended when >=2 independent value streams detected
+- Plan signals: fix, add, refactor, file/module names, existing codebase references
+- Epic signals: MVP, launch, phase, roadmap, platform, multiple subsystems/personas
+- Output format: Recommendation, Why (grounded in signals), Path (decision tree path), Next command (bw plan init or bw epic init)
+- Rule: Default to PLAN if idea is too sparse
+
+**Structure/Sections:**
+- Reason (update triager agent for plan vs epic flow recommendation)
+- Raw Concept (task, changes, files, flow)
+- Narrative (Structure, Dependencies, Highlights, Rules, Examples)
+- Facts (plan_signals, epic_signals, epic_threshold conventions)
+
+**Notable Entities:**
+- Decision tree: A (single/multi scope) -> B (knowledge check) or C (value-stream check)
+- Output format: Recommendation card with Why, Path, Next command
+- Examples: "Add login" -> PLAN, "Build search platform..." -> EPIC

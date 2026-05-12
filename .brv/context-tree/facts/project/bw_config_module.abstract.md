@@ -1,1 +1,1 @@
-The bw/core/config.py module loads .bw/config.yaml and resolves model overrides using a tool+agent hierarchy, defaulting to opus for conductors, sonnet for workers, and haiku for simple tasks.
+BW config module defines 11 agent names including epic-conductor, milestone-splitter, milestone-reviewer, and triager with model resolution fallback.

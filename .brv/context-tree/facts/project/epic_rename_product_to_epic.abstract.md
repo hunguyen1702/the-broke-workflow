@@ -1,0 +1,1 @@
+Documents the renaming of 'product' to 'epic' in the Broke Workflow CLI, changing bw product to bw epic, --flow product to --flow epic, product: to epic: frontmatter, and related file/conductor names.

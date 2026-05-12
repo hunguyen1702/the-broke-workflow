@@ -1,0 +1,1 @@
+The triage command classifies user ideas as plan-flow or epic-flow using a decision tree (scope test, then knowledge/value-stream test), replacing the old PLAN vs PRODUCT routing.

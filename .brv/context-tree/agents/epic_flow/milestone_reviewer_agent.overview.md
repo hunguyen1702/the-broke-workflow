@@ -1,0 +1,6 @@
+- Performs adversarial review across 5 categories: Coverage, Standalone Value, Ordering, Sizing, Gaps
+- Each checklist item rated YES/NO/PARTIAL; verdict categories: GOOD / NEEDS WORK / RETHINK
+- Critical principles: constructiveness (every issue needs a suggestion), focus on substance over wording, think like solo developer
+- Checks that deferred "not yet" items appear in later milestones
+- Input: requirements + milestones; Output: review findings with ratings
+- Rule 4 specifically ensures deferred items are tracked through subsequent milestones

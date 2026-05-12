@@ -1,36 +1,37 @@
 ---
 title: BW Config Module
-summary: Model resolution from .bw/config.yaml with tool+agent override hierarchy
+summary: Config module with agent names (epic-conductor, milestone-splitter, milestone-reviewer, triager) and model resolution
 tags: []
 related: []
 keywords: []
 createdAt: '2026-05-11T02:12:49.440Z'
-updatedAt: '2026-05-11T02:12:49.440Z'
+updatedAt: '2026-05-12T17:15:46.995Z'
 ---
 ## Reason
-Document new config.py module for model resolution
+Update bw/core/config.py knowledge with current agent names
 
 ## Raw Concept
 **Task:**
-Document bw/core/config.py module
+Document bw/core/config.py module with current agent configuration
+
+**Changes:**
+- Updated agent names to epic-conductor, milestone-splitter, milestone-reviewer, triager
+- Removed product-conductor from current agents
 
 **Files:**
 - bw/core/config.py
 
 **Flow:**
-load_config -> resolve_model -> return model name
+load_config -> resolve_model -> is_configured
+
+**Timestamp:** 2026-05-12
 
 ## Narrative
 ### Structure
-Module provides load_config(), save_config(), resolve_model(), is_configured(), default_config() functions
+AGENTS tuple defines 11 agents: conductor, discovery, analysis, plan-writer, splitter, reviewer, worker, epic-conductor, milestone-splitter, milestone-reviewer, triager. resolve_model() supports tool+agent model override with fallback chain.
 
 ### Dependencies
-Uses yaml for config parsing, bw.core.paths for finding .bw root
+Uses yaml and bw.core.paths.find_bw_root
 
 ### Highlights
-Supports tool-specific model overrides with agent-level fallback. Default config tiers: opus for conductors, sonnet for workers, haiku for simple tasks
-
-## Facts
-- **config_module**: bw/core/config.py loads .bw/config.yaml and resolves model overrides for tool+agent combinations [project]
-- **model_resolution**: Model resolution order: models.<tool>.<agent> -> models.<tool>.default -> None [project]
-- **default_model_config**: Default config uses opus for conductor, product-conductor; sonnet for discovery/analysis/plan-writer/splitter/reviewer; haiku for worker [project]
+Model resolution order: models.<tool>.<agent> -> models.<tool>.default -> None. default_config() provides Anthropic model defaults (opus, sonnet, haiku).

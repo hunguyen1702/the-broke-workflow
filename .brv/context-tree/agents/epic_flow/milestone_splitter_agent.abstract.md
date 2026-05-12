@@ -1,0 +1,1 @@
+Milestone Splitter Agent breaks epic requirements into 3-6 shippable milestones with ordering, scoping rules, and 3-7 day sizing guidelines.

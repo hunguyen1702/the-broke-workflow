@@ -1,0 +1,8 @@
+- Epic Conductor orchestrates epic plan flow with 5 steps: requirements -> summary -> milestones -> review -> present -> finalize
+- Step 1: Gather requirements using JTBD lens and follow-up questions
+- Step 2: Write requirements document, halt for approval
+- Step 3: Spawn milestone-splitter as sub-agent
+- Step 4: Spawn milestone-reviewer as sub-agent
+- Step 5: Present results, halt for decision, finalize
+- Core rules: Never craft file paths (use CLI), never craft ls/cat commands, keep context lean, HALT at checkpoints, focus on WHAT not HOW
+- Spawns milestone-splitter and milestone-reviewer as sub-agents with fresh context

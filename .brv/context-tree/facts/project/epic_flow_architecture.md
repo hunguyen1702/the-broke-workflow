@@ -1,18 +1,18 @@
 ---
 title: Epic Flow Architecture
-summary: 'Epic flow replaces product flow: Epic -> Milestone -> Plan -> Task hierarchy with bw epic CLI, --flow epic, and epic-conductor model config'
+summary: '5-step milestone planning flow: Requirements -> Summary -> Milestones -> Review -> Present'
 tags: []
-related: []
+related: [facts/project/triage_command.md, facts/project/triager_agent.md]
 keywords: []
 createdAt: '2026-05-12T16:20:32.312Z'
-updatedAt: '2026-05-12T16:20:32.312Z'
+updatedAt: '2026-05-12T17:14:03.342Z'
 ---
 ## Reason
-Documenting the renamed epic flow hierarchy and CLI changes
+Create/update epic flow architecture replacing old product flow
 
 ## Raw Concept
 **Task:**
-Document epic flow architecture after renaming from product flow
+Document the epic flow architecture for multi-stream milestone planning
 
 **Changes:**
 - Hard-renamed product flow to epic flow
@@ -23,6 +23,8 @@ Document epic flow architecture after renaming from product flow
 - Epic documents: .bw/plans/<slug>/epic.md and milestones.md
 - Model config key: epic-conductor
 - Removed bw product command and --flow product support
+- Renamed from product_flow_architecture to epic_flow_architecture
+- Updated terminology from product to epic throughout
 
 **Files:**
 - bw/cli.py
@@ -33,24 +35,25 @@ Document epic flow architecture after renaming from product flow
 - templates/epic.md
 - templates/plan.md
 - tests/test_epic_flow.py
+- agents/epic-conductor.md
+- CLAUDE.md
 
 **Flow:**
-bw epic -> step --flow epic -> generate epic.md + milestones.md -> implementation plans with epic: frontmatter
+requirements -> summary -> milestones -> review -> present -> finalize
 
 **Timestamp:** 2026-05-12
 
 ## Narrative
 ### Structure
-The workflow hierarchy is now Epic (top) -> Milestone -> Plan -> Task. The epic-conductor model coordinates epic-level planning. Implementation plans use epic: and milestone: frontmatter fields to link to parent epic/milestone.
+Epic flow is a 5-step milestone planning flow managed by epic-conductor agent. Steps: Requirements (JTBD), Summary (user review, HALTs), Milestones (spawns milestone-splitter), Review (spawns milestone-reviewer), Present (HALTs for decision).
 
 ### Dependencies
-Depends on step command infrastructure in bw/core/steps.py
+Uses bw epic CLI commands: init, read, finalize, plan, link
 
 ### Highlights
-CLI uses bw epic command, step flow uses --flow epic flag, model config uses epic-conductor key
+Sub-agents: milestone-splitter (breaks into shippable phases), milestone-reviewer (reviews milestone plans). Document access via bw epic read {slug} requirements|milestones.
 
 ## Facts
-- **workflow_hierarchy**: Canonical hierarchy is Epic -> Milestone -> Plan -> Task [project]
-- **cli_command**: CLI command is bw epic [project]
-- **step_flow_flag**: Step flow flag is --flow epic [project]
-- **model_config_key**: Model config key is epic-conductor [project]
+- **epic_flow_steps**: Epic flow has 5 steps: Requirements, Summary, Milestones, Review, Present [convention]
+- **sub_agents**: Epic-conductor delegates to milestone-splitter and milestone-reviewer sub-agents [convention]
+- **document_access**: Document access: bw epic read {slug} requirements or milestones [convention]

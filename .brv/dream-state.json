@@ -1,5 +1,5 @@
 {
-  "curationsSinceDream": 3,
+  "curationsSinceDream": 8,
   "lastDreamAt": "2026-05-12T15:14:00.906Z",
   "lastDreamLogId": "drm-1778598744878",
   "pendingMerges": [],
@@ -15,6 +15,54 @@
     {
       "enqueuedAt": 1778604044854,
       "path": "facts/project/documentation_policy.md"
+    },
+    {
+      "enqueuedAt": 1778605798306,
+      "path": "facts/project/epic_rename_product_to_epic.md"
+    },
+    {
+      "enqueuedAt": 1778605940591,
+      "path": "facts/project/epic_flow_cli_tests.md"
+    },
+    {
+      "enqueuedAt": 1778605940591,
+      "path": "facts/project/project_config.md"
+    },
+    {
+      "enqueuedAt": 1778605940591,
+      "path": "facts/project/test_framework_configuration.md"
+    },
+    {
+      "enqueuedAt": 1778606048685,
+      "path": "facts/project/the_broke_workflow_architecture.md"
+    },
+    {
+      "enqueuedAt": 1778606048685,
+      "path": "facts/project/triage_command.md"
+    },
+    {
+      "enqueuedAt": 1778606048685,
+      "path": "facts/project/triager_agent.md"
+    },
+    {
+      "enqueuedAt": 1778606160102,
+      "path": "agents/plan_flow/triager_agent.md"
+    },
+    {
+      "enqueuedAt": 1778606160102,
+      "path": "agents/epic_flow/milestone_reviewer_agent.md"
+    },
+    {
+      "enqueuedAt": 1778606160102,
+      "path": "agents/epic_flow/epic_conductor_agent.md"
+    },
+    {
+      "enqueuedAt": 1778606160102,
+      "path": "agents/epic_flow/milestone_splitter_agent.md"
+    },
+    {
+      "enqueuedAt": 1778606160102,
+      "path": "facts/project/bw_config_module.md"
     }
   ],
   "totalDreams": 6,
