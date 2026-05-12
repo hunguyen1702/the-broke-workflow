@@ -1,82 +1,71 @@
 # the-broke-workflow
 
-Personal agent-coding workflow toolkit. Runs a 6-step planning process (Requirements, Discovery, Analysis, Write Plan, Split Tasks, Review) using a conductor that delegates heavy work to fresh sub-agents.
+Personal agent-coding workflow toolkit. It provides:
 
-## Quick Start
+- a 6-step implementation **plan** flow
+- a 5-step milestone-oriented **epic** flow
+- file-backed task tracking under `.bw/`
+- adapters for agent tools, currently Claude Code commands plus deferred Codex notes
+
+`CLAUDE.md` is the canonical repo guide. Keep detailed architecture and agent instructions there.
+
+## Install
 
 ```bash
 pip install -e .
 bw init
-bw plan init "My Project"
 ```
 
-## Core Commands
+## Main Flows
 
 ```bash
-# Step flow
-bw step list                  # List all 6 steps
-bw step show <N> <slug>       # Conductor instructions for step N
-bw step agent <N> <slug>      # Sub-agent bootstrap instructions
-bw step spawn <N> <slug>      # Output Agent(...) call with configured model
+# Route a raw idea to the right flow
+bw triage "Build a search platform with indexing and ranking" --tool claude-code
 
-# Plan lifecycle
-bw plan init "<title>"        # Create new plan from templates
-bw plan list                  # List all plans
-bw plan read <slug> <doc>     # Print a document (plan|discovery|analysis)
-bw plan finalize <slug>       # Freeze plan and create tasks/
+# Implementation plan flow
+bw plan init "Search API"
+bw step list
+bw step show 1 <plan-slug>
+bw plan status <plan-slug>
 
-# Task lifecycle
-bw task list                  # List all tasks (--plan, --status filters)
-bw task next                  # Show ready tasks (unblocked, unclaimed)
-bw task show <id>             # Print a task file
-bw task claim <id> --owner X  # Claim a task
-bw task status <id> <status>  # Update status
-bw task dag                   # Render task DAG as ASCII
-
-# Other
-bw doctor                     # Check installation
-bw config                     # Configure settings
+# Epic flow: Epic -> Milestone -> Plan -> Task
+bw epic init "Search Platform"
+bw step list --flow epic
+bw step show 1 <epic-slug> --flow epic
+bw epic plan <epic-slug> 1
+bw epic status <epic-slug>
 ```
 
-## 6-Step Flow
+## Command Groups
 
-1. **Requirements** — Gather user needs (adaptive, not rigid Q&A)
-2. **Discovery** — Explore codebase and gather context
-3. **Analysis** — Score and present approach options
-4. **Write Plan** — Synthesize findings into a concrete plan
-5. **Split Tasks** — Decompose plan into executable tasks with DAG
-6. **Review** — Final human review before task execution
-
-The conductor navigates the flow via `bw step show` commands and HALTs at key checkpoints for human input.
-
-## Architecture
-
-```
-.bw/              # Workflow data root
-  plans/<slug>/   # Plan documents (plan.md, discovery-report.md, analysis-report.md)
-  tasks/<slug>/   # Task files (001-task.md, ...)
-
-steps/            # 6-step conductor playbook
-agents/           # Sub-agent definitions (conductor, discovery, analysis, ...)
-adapters/         # Tool integrations (claude-code, codex)
-templates/        # Shared document templates
+```bash
+bw plan      # plan docs: init/list/docs/read/finalize/status/remove
+bw epic      # epic docs and milestone rollup: init/list/docs/read/finalize/plan/status/link/remove
+bw task      # task list/next/show/claim/release/status/deps/dag/add-dependency/comment/comments/remove
+bw step      # render flow instructions and sub-agent spawn calls
+bw triage    # classify an idea as plan-flow vs epic-flow
+bw worktree  # create/list/remove .bw/worktrees worktrees
+bw install   # install adapters for claude-code or codex
+bw config    # print .bw/config.yaml
+bw doctor    # health check
 ```
 
-## Configuration
+## Repository Layout
 
-Models per agent are configured in `.bw/config.yaml`:
-
-```yaml
-models:
-  claude-code:
-    default: opus
-    conductor: opus
-    discovery: sonnet
-    analysis: sonnet
-    plan-writer: sonnet
-    splitter: sonnet
-    reviewer: sonnet
-    worker: haiku
+```text
+.bw/                 Runtime workspace: plans, tasks, archive, worktrees, config
+adapters/            Tool adapters
+agents/              Tool-agnostic agent prompts
+bw/commands/         Click command groups
+bw/core/             Frontmatter, paths, steps, config, task store, triage
+steps/               Plan and epic flow instructions rendered by bw step
+templates/           Markdown templates for plans, epics, milestones, tasks
+tests/               CLI regression tests
 ```
 
-See `CLAUDE.md` for full architecture details.
+## Verify
+
+```bash
+python -m unittest tests.test_epic_flow -v
+python -m bw.cli doctor
+```
