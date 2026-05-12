@@ -11,3 +11,4 @@ models:
     splitter: sonnet
     reviewer: sonnet
     worker: sonnet
+    triager: haiku
