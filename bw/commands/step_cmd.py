@@ -41,7 +41,7 @@ def step():
 _flow_option = click.option(
     "--flow",
     default="plan",
-    type=click.Choice(["plan", "product"]),
+    type=click.Choice(["plan", "epic"]),
     help="Flow type (default: plan).",
 )
 

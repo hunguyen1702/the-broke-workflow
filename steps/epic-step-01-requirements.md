@@ -36,7 +36,7 @@ Mentally map the input against these dimensions:
 
 | Dimension | What it covers | When to ask |
 |-----------|---------------|-------------|
-| **What** | Product/feature being built | Already stated — just confirm understanding |
+| **What** | Epic/feature being built | Already stated — just confirm understanding |
 | **Why** | Motivation, who it's for | Ask if not obvious from context |
 | **Boundaries** | What's in/out of scope | Ask if the request is ambiguous or broad |
 | **Constraints** | Timeline, tech, resources | Ask only if the user signals these exist |
@@ -59,7 +59,7 @@ After each round, present a running summary:
 >
 > Anything to add or clarify?
 
-The user controls the depth. Simple products may need zero follow-ups.
+The user controls the depth. Simple epics may need zero follow-ups.
 
 ### 5. Auto-Proceed
 

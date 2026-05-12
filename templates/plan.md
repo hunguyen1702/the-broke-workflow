@@ -5,7 +5,7 @@ status: draft
 created: {date}
 finalized:
 approach:
-product:
+epic:
 milestone:
 ---
 

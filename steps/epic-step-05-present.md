@@ -57,13 +57,13 @@ If the verdict is GOOD with no issues, keep it brief:
 
 > **What would you like to do?**
 >
-> 1. **Accept** — finalize this product plan and milestone breakdown
+> 1. **Accept** — finalize this epic plan and milestone breakdown
 > 2. **Adjust** — tell me specific changes and I'll update the milestones
 > 3. **Redo** — go back to milestone splitting with different guidance
 
 **HALTs** — wait for user decision.
 
-- If **Accept**: call `bw product finalize {slug}` and complete the flow.
+- If **Accept**: call `bw epic finalize {slug}` and complete the flow.
 - If **Adjust**: update milestones directly based on user feedback, re-present.
 - If **Redo**: go back to Step 3 with the user's additional guidance included in the splitter prompt.
 
@@ -71,10 +71,10 @@ If the verdict is GOOD with no issues, keep it brief:
 
 After finalization:
 
-> **Product plan finalized.**
+> **Epic plan finalized.**
 >
-> - Requirements: `bw product read {slug} requirements`
-> - Milestones: `bw product read {slug} milestones`
+> - Requirements: `bw epic read {slug} requirements`
+> - Milestones: `bw epic read {slug} milestones`
 >
 > To start technical planning for a milestone, use:
-> - `bw product plan {slug} 1` — creates a plan linked to Milestone 1
+> - `bw epic plan {slug} 1` — creates a plan linked to Milestone 1

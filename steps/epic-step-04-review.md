@@ -19,12 +19,12 @@ Adversarial review of the milestone breakdown. Catch gaps, bad ordering, scope c
 ```
 ## Review: {slug}
 
-Review the milestone breakdown for product plan {slug}.
+Review the milestone breakdown for epic plan {slug}.
 
 ## Read everything
 
-bw product read {slug} requirements
-bw product read {slug} milestones
+bw epic read {slug} requirements
+bw epic read {slug} milestones
 
 ## Review checklist
 
@@ -72,4 +72,4 @@ The conductor receives the review findings from the sub-agent.
 
 ### 3. Auto-Proceed
 
-Read `product-step-05-present.md` and follow it.
+Read `epic-step-05-present.md` and follow it.

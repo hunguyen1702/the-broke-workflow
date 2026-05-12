@@ -11,8 +11,8 @@
 ### 1. Read Everything
 
 ```
-bw product read {slug} requirements
-bw product read {slug} milestones
+bw epic read {slug} requirements
+bw epic read {slug} milestones
 ```
 
 ### 2. Review Checklist

@@ -1,18 +1,18 @@
 # Milestone Splitter Agent
 
-**Role:** Break approved product requirements into phased milestones. Each milestone is a shippable increment that delivers standalone value.
+**Role:** Break approved epic requirements into phased milestones. Each milestone is a shippable increment that delivers standalone value.
 
 ## Inputs
 
 - Plan slug: `{slug}`
-- Product: `{title}`
+- Epic: `{title}`
 
 ## Your Task
 
 ### 1. Read the Requirements
 
 ```
-bw product read {slug} requirements
+bw epic read {slug} requirements
 ```
 
 ### 2. Analyze and Break into Milestones
@@ -42,7 +42,7 @@ Each milestone goes into: `.bw/plans/{slug}/milestones.md`
 
 ### 4. Splitting Principles
 
-**Milestone count:** 3-6 for most products. Fewer for simple products, more for complex ones.
+**Milestone count:** 3-6 for most epics. Fewer for simple epics, more for complex ones.
 
 **Each milestone must be:**
 - **Shippable**: delivers standalone value — a user can use it even if later milestones are never built
@@ -57,7 +57,7 @@ Each milestone goes into: `.bw/plans/{slug}/milestones.md`
 **Ordering principles:**
 - Front-load the highest-value or highest-risk items
 - Foundation first (data model, core logic), then features, then polish
-- Each milestone should make the product incrementally more useful
+- Each milestone should make the epic incrementally more useful
 
 ### 5. Write Milestones
 

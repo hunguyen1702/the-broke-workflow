@@ -3,18 +3,18 @@ slug: {slug}
 summary: {title}
 status: draft
 created: {date}
-type: product
+type: epic
 ---
 
-# Product Plan: {title}
+# Epic Plan: {title}
 
 ## What We're Building
 
-<!-- One paragraph: what is this product/feature and why does it matter? -->
+<!-- One paragraph: what is this epic/feature and why does it matter? -->
 
 ## Target Users
 
-<!-- Who is this for? What job are they hiring this product to do? -->
+<!-- Who is this for? What job are they hiring this epic to do? -->
 
 ## Core Requirements
 

@@ -25,11 +25,11 @@ The conductor spawns ONE milestone-splitter sub-agent with this prompt:
 ```
 ## Milestones: {slug}
 
-Break the product plan for {slug} into phased milestones.
+Break the epic plan for {slug} into phased milestones.
 
 ## Read the requirements
 
-bw product read {slug} requirements
+bw epic read {slug} requirements
 
 ## Your task
 
@@ -77,4 +77,4 @@ The conductor receives the milestone summary from the sub-agent.
 
 ### 4. Auto-Proceed
 
-Read `product-step-04-review.md` and follow it.
+Read `epic-step-04-review.md` and follow it.

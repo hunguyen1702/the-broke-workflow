@@ -28,15 +28,15 @@ STEP_AGENTS = {
     6: "reviewer",
 }
 
-PRODUCT_STEP_META = {
-    1: {"file": "product-step-01-requirements.md", "name": "Requirements", "slug": "requirements", "agent": None},
-    2: {"file": "product-step-02-summary.md", "name": "Summary", "slug": "summary", "agent": None},
-    3: {"file": "product-step-03-milestones.md", "name": "Milestones", "slug": "milestones", "agent": "milestone-splitter.md"},
-    4: {"file": "product-step-04-review.md", "name": "Review", "slug": "review", "agent": "milestone-reviewer.md"},
-    5: {"file": "product-step-05-present.md", "name": "Present", "slug": "present", "agent": None},
+EPIC_STEP_META = {
+    1: {"file": "epic-step-01-requirements.md", "name": "Requirements", "slug": "requirements", "agent": None},
+    2: {"file": "epic-step-02-summary.md", "name": "Summary", "slug": "summary", "agent": None},
+    3: {"file": "epic-step-03-milestones.md", "name": "Milestones", "slug": "milestones", "agent": "milestone-splitter.md"},
+    4: {"file": "epic-step-04-review.md", "name": "Review", "slug": "review", "agent": "milestone-reviewer.md"},
+    5: {"file": "epic-step-05-present.md", "name": "Present", "slug": "present", "agent": None},
 }
 
-PRODUCT_STEP_AGENTS = {
+EPIC_STEP_AGENTS = {
     3: "milestone-splitter",
     4: "milestone-reviewer",
 }
@@ -53,7 +53,7 @@ class FlowConfig(NamedTuple):
 
 FLOW_META = {
     "plan": FlowConfig(STEP_META, STEP_AGENTS, "conductor.md", "plan.md"),
-    "product": FlowConfig(PRODUCT_STEP_META, PRODUCT_STEP_AGENTS, "product-conductor.md", "product-plan.md"),
+    "epic": FlowConfig(EPIC_STEP_META, EPIC_STEP_AGENTS, "epic-conductor.md", "epic.md"),
 }
 
 
@@ -73,6 +73,15 @@ def _agents_dir() -> Path:
             "Ensure you're running from a proper bw installation."
         )
     return _AGENTS_DIR
+
+
+def read_agent_file(name: str) -> str:
+    """Read raw agent markdown by filename (e.g. 'triager.md').
+
+    Used by callers outside the step flow (e.g. triage) that need agent
+    content without going through STEP_META.
+    """
+    return (_agents_dir() / name).read_text()
 
 
 def _get_flow(flow: str) -> FlowConfig:

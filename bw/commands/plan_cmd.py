@@ -217,7 +217,7 @@ def plan_status(slug: str, as_json: bool, details: bool):
             "slug": slug,
             "status": meta.get("status", "unknown"),
             "summary": meta.get("summary", ""),
-            "product": meta.get("product") or None,
+            "epic": meta.get("epic") or None,
             "milestone": meta.get("milestone") or None,
             "tasks": {"total": total, "done": done, **dict(counts)},
             "task_list": task_list,
@@ -230,10 +230,10 @@ def plan_status(slug: str, as_json: bool, details: bool):
     summary = meta.get("summary", "")
     if summary:
         click.echo(f"Summary: {summary}")
-    prod = meta.get("product")
+    epic = meta.get("epic")
     ms = meta.get("milestone")
-    if prod:
-        link = f"Product: {prod}"
+    if epic:
+        link = f"Epic: {epic}"
         if ms:
             link += f" → Milestone {ms}"
         click.echo(link)

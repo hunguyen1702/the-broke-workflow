@@ -49,7 +49,7 @@ def doctor():
     try:
         tdir = templates.templates_dir()
         check("templates/ found", tdir.is_dir(), str(tdir))
-        for t in ["plan.md", "task.md", "discovery-report.md", "analysis-report.md"]:
+        for t in ["plan.md", "epic.md", "milestones.md", "task.md", "discovery-report.md", "analysis-report.md"]:
             check(f"  template: {t}", (tdir / t).exists())
     except FileNotFoundError as e:
         check("templates/ found", False, str(e))

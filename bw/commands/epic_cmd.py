@@ -1,4 +1,4 @@
-"""bw product — product plan lifecycle commands."""
+"""bw epic — epic plan lifecycle commands."""
 
 import json as json_mod
 import re
@@ -17,7 +17,7 @@ from bw.core.templates import get_template
 
 # Map short doc names to filenames
 DOC_NAMES = {
-    "requirements": "product-plan.md",
+    "requirements": "epic.md",
     "milestones": "milestones.md",
 }
 
@@ -49,8 +49,8 @@ def _parse_milestones(milestones_path: Path) -> list[dict]:
     return milestones
 
 
-def _find_linked_plans(product_slug: str) -> dict[int, list[dict]]:
-    """Scan all plans to find those linked to a product.
+def _find_linked_plans(epic_slug: str) -> dict[int, list[dict]]:
+    """Scan all plans to find those linked to an epic.
 
     Returns {milestone_number: [{"slug": ..., "status": ..., ...}]}.
     """
@@ -67,7 +67,7 @@ def _find_linked_plans(product_slug: str) -> dict[int, list[dict]]:
         if not plan_file.exists():
             continue
         meta, _ = read_file(plan_file)
-        if meta.get("product") != product_slug:
+        if meta.get("epic") != epic_slug:
             continue
         ms = meta.get("milestone")
         if ms is None:
@@ -113,17 +113,17 @@ _STATUS_ICON = {
 
 
 @click.group()
-def product():
-    """Product plan lifecycle commands."""
+def epic():
+    """Epic plan lifecycle commands."""
     pass
 
 
-@product.command("init")
+@epic.command("init")
 @click.argument("title")
-def product_init(title: str):
-    """Create a new product plan from templates.
+def epic_init(title: str):
+    """Create a new epic plan from templates.
 
-    TITLE is the product name (e.g. "my awesome app").
+    TITLE is the epic name (e.g. "my awesome app").
     """
     bw = find_bw_root()
     slug = slugify(title)
@@ -138,7 +138,7 @@ def product_init(title: str):
     today = date.today().isoformat()
 
     for template_name, filename in [
-        ("product-plan.md", "product-plan.md"),
+        ("epic.md", "epic.md"),
         ("milestones.md", "milestones.md"),
     ]:
         content = get_template(template_name)
@@ -148,15 +148,15 @@ def product_init(title: str):
         content = content.replace("{feature_name}", title)
         (pdir / filename).write_text(content)
 
-    click.echo(f"Product plan created: {slug}")
+    click.echo(f"Epic plan created: {slug}")
     click.echo(f"  .bw/plans/{slug}/")
     for f in sorted(pdir.iterdir()):
         click.echo(f"    {f.name}")
 
 
-@product.command("list")
-def product_list():
-    """List all product plans."""
+@epic.command("list")
+def epic_list():
+    """List all epic plans."""
     bw = find_bw_root()
     pdir = plans_dir(bw)
     if not pdir.exists():
@@ -167,7 +167,7 @@ def product_list():
     for slug_dir in sorted(pdir.iterdir()):
         if not slug_dir.is_dir():
             continue
-        plan_file = slug_dir / "product-plan.md"
+        plan_file = slug_dir / "epic.md"
         if plan_file.exists():
             meta, _ = read_file(plan_file)
             status = meta.get("status", "unknown")
@@ -176,13 +176,13 @@ def product_list():
             found = True
 
     if not found:
-        click.echo("No product plans found.")
+        click.echo("No epic plans found.")
 
 
-@product.command("docs")
+@epic.command("docs")
 @click.argument("slug")
-def product_docs(slug: str):
-    """List documents in a product plan."""
+def epic_docs(slug: str):
+    """List documents in an epic plan."""
     bw = find_bw_root()
     pdir = plan_dir(bw, slug)
     if not pdir.exists():
@@ -198,11 +198,11 @@ def product_docs(slug: str):
         click.echo(f"  {friendly:20s} → {f}")
 
 
-@product.command("read")
+@epic.command("read")
 @click.argument("slug")
 @click.argument("doc")
-def product_read(slug: str, doc: str):
-    """Print a product plan document.
+def epic_read(slug: str, doc: str):
+    """Print an epic plan document.
 
     DOC is one of: requirements, milestones (or a filename).
     """
@@ -220,19 +220,19 @@ def product_read(slug: str, doc: str):
         raise SystemExit(1)
 
 
-@product.command("finalize")
+@epic.command("finalize")
 @click.argument("slug")
-def product_finalize(slug: str):
-    """Freeze a product plan — mark status as finalized."""
+def epic_finalize(slug: str):
+    """Freeze an epic plan — mark status as finalized."""
     bw = find_bw_root()
-    plan_file = plan_dir(bw, slug) / "product-plan.md"
+    plan_file = plan_dir(bw, slug) / "epic.md"
     if not plan_file.exists():
-        click.echo(f"Product plan not found: {slug}", err=True)
+        click.echo(f"Epic plan not found: {slug}", err=True)
         raise SystemExit(1)
 
     meta, _ = read_file(plan_file)
     if meta.get("status") == "finalized":
-        click.echo(f"Product plan {slug} is already finalized.")
+        click.echo(f"Epic plan {slug} is already finalized.")
         return
 
     try:
@@ -241,21 +241,21 @@ def product_finalize(slug: str):
         click.echo(f"Could not finalize {slug}: {e}", err=True)
         raise SystemExit(1)
 
-    click.echo(f"Product plan {slug} finalized.")
+    click.echo(f"Epic plan {slug} finalized.")
 
 
 # ---------------------------------------------------------------------------
-# product plan — create a plan linked to a milestone
+# epic plan — create a plan linked to a milestone
 # ---------------------------------------------------------------------------
 
 
-@product.command("plan")
+@epic.command("plan")
 @click.argument("slug")
 @click.argument("milestone_n", type=int)
-def product_plan(slug: str, milestone_n: int):
-    """Create a plan linked to a product milestone.
+def epic_plan(slug: str, milestone_n: int):
+    """Create a plan linked to an epic milestone.
 
-    SLUG is the product plan slug.
+    SLUG is the epic plan slug.
     MILESTONE_N is the milestone number (e.g. 1, 2, 3).
     """
     bw = find_bw_root()
@@ -263,7 +263,7 @@ def product_plan(slug: str, milestone_n: int):
     milestones_file = pdir / "milestones.md"
 
     if not pdir.exists():
-        click.echo(f"Product plan not found: {slug}", err=True)
+        click.echo(f"Epic plan not found: {slug}", err=True)
         raise SystemExit(1)
     if not milestones_file.exists():
         click.echo(f"No milestones.md found for {slug}", err=True)
@@ -303,10 +303,10 @@ def product_plan(slug: str, milestone_n: int):
         content = content.replace("{feature_name}", plan_title)
         (new_pdir / filename).write_text(content)
 
-    # Set product/milestone link and summary
+    # Set epic/milestone link and summary
     plan_file = new_pdir / "plan.md"
     summary = target["goal"] or target["name"]
-    update_meta(plan_file, product=slug, milestone=milestone_n, summary=summary)
+    update_meta(plan_file, epic=slug, milestone=milestone_n, summary=summary)
 
     click.echo(f"Plan created: {plan_slug}")
     click.echo(f"  Linked to: {slug} → Milestone {milestone_n}: {target['name']}")
@@ -316,29 +316,29 @@ def product_plan(slug: str, milestone_n: int):
 
 
 # ---------------------------------------------------------------------------
-# product status — milestone rollup with progress
+# epic status — milestone rollup with progress
 # ---------------------------------------------------------------------------
 
 
-@product.command("status")
+@epic.command("status")
 @click.argument("slug")
 @click.option("--json", "as_json", is_flag=True, help="Output as JSON for agent use.")
 @click.option("--details", is_flag=True, help="Show full hierarchy with task names.")
-def product_status(slug: str, as_json: bool, details: bool):
-    """Show product status with milestone progress.
+def epic_status(slug: str, as_json: bool, details: bool):
+    """Show epic status with milestone progress.
 
-    SLUG is the product plan slug.
+    SLUG is the epic plan slug.
     """
     bw = find_bw_root()
     pdir = plan_dir(bw, slug)
-    product_file = pdir / "product-plan.md"
+    epic_file = pdir / "epic.md"
     milestones_file = pdir / "milestones.md"
 
-    if not product_file.exists():
-        click.echo(f"Product plan not found: {slug}", err=True)
+    if not epic_file.exists():
+        click.echo(f"Epic plan not found: {slug}", err=True)
         raise SystemExit(1)
 
-    prod_meta, _ = read_file(product_file)
+    epic_meta, _ = read_file(epic_file)
     milestones = _parse_milestones(milestones_file) if milestones_file.exists() else []
     linked = _find_linked_plans(slug)
 
@@ -379,8 +379,8 @@ def product_status(slug: str, as_json: bool, details: bool):
     if as_json:
         out = {
             "slug": slug,
-            "status": prod_meta.get("status", "unknown"),
-            "summary": prod_meta.get("summary", ""),
+            "status": epic_meta.get("status", "unknown"),
+            "summary": epic_meta.get("summary", ""),
             "milestones": milestone_data,
             "totals": {
                 "tasks": total_tasks,
@@ -393,9 +393,9 @@ def product_status(slug: str, as_json: bool, details: bool):
         return
 
     # --- Human-readable output ---
-    status = prod_meta.get("status", "unknown")
-    click.echo(f"Product: {slug} [{status}]")
-    summary = prod_meta.get("summary", "")
+    status = epic_meta.get("status", "unknown")
+    click.echo(f"Epic: {slug} [{status}]")
+    summary = epic_meta.get("summary", "")
     if summary:
         click.echo(f"Summary: {summary}")
     click.echo()
@@ -433,30 +433,30 @@ def product_status(slug: str, as_json: bool, details: bool):
     )
 
 
-@product.command("link")
+@epic.command("link")
 @click.argument("plan_slug")
-@click.argument("product_slug")
+@click.argument("epic_slug")
 @click.argument("milestone_n", type=int)
-def product_link(plan_slug: str, product_slug: str, milestone_n: int):
-    """Link an existing plan to a product milestone.
+def epic_link(plan_slug: str, epic_slug: str, milestone_n: int):
+    """Link an existing plan to an epic milestone.
 
     PLAN_SLUG is the plan to link.
-    PRODUCT_SLUG is the product plan slug.
+    EPIC_SLUG is the epic plan slug.
     MILESTONE_N is the milestone number to link to (e.g. 1, 2, 3).
     """
     bw = find_bw_root()
 
-    # Validate product exists
-    pdir = plan_dir(bw, product_slug)
-    product_file = pdir / "product-plan.md"
+    # Validate epic exists
+    pdir = plan_dir(bw, epic_slug)
+    epic_file = pdir / "epic.md"
     milestones_file = pdir / "milestones.md"
-    if not product_file.exists():
-        click.echo(f"Product plan not found: {product_slug}", err=True)
+    if not epic_file.exists():
+        click.echo(f"Epic plan not found: {epic_slug}", err=True)
         raise SystemExit(1)
 
     # Validate milestone exists
     if not milestones_file.exists():
-        click.echo(f"No milestones.md found for {product_slug}", err=True)
+        click.echo(f"No milestones.md found for {epic_slug}", err=True)
         raise SystemExit(1)
 
     milestones = _parse_milestones(milestones_file)
@@ -464,7 +464,7 @@ def product_link(plan_slug: str, product_slug: str, milestone_n: int):
     if not target:
         nums = ", ".join(str(m["number"]) for m in milestones)
         click.echo(
-            f"Milestone {milestone_n} not found in {product_slug}. Available: {nums}",
+            f"Milestone {milestone_n} not found in {epic_slug}. Available: {nums}",
             err=True,
         )
         raise SystemExit(1)
@@ -478,28 +478,28 @@ def product_link(plan_slug: str, product_slug: str, milestone_n: int):
 
     # Write the link
     summary = target["goal"] or target["name"]
-    update_meta(plan_file, product=product_slug, milestone=milestone_n, summary=summary)
+    update_meta(plan_file, epic=epic_slug, milestone=milestone_n, summary=summary)
 
-    click.echo(f"Plan '{plan_slug}' linked to {product_slug} → Milestone {milestone_n}: {target['name']}")
+    click.echo(f"Plan '{plan_slug}' linked to {epic_slug} → Milestone {milestone_n}: {target['name']}")
 
 
-@product.command("remove")
+@epic.command("remove")
 @click.argument("slug")
-@click.option("--force", is_flag=True, help="Remove product plan and all linked plans.")
-def product_remove(slug: str, force: bool):
-    """Remove a product plan and all linked plans."""
+@click.option("--force", is_flag=True, help="Remove epic plan and all linked plans.")
+def epic_remove(slug: str, force: bool):
+    """Remove an epic plan and all linked plans."""
     bw = find_bw_root()
     pdir = plan_dir(bw, slug)
-    product_file = pdir / "product-plan.md"
+    epic_file = pdir / "epic.md"
 
-    if not product_file.exists():
-        click.echo(f"Product plan not found: {slug}", err=True)
+    if not epic_file.exists():
+        click.echo(f"Epic plan not found: {slug}", err=True)
         raise SystemExit(1)
 
     # Check for linked plans (dependencies)
     by_milestone = _find_linked_plans(slug)
     if by_milestone:
-        click.echo(f"Product plan '{slug}' is linked to plans:")
+        click.echo(f"Epic plan '{slug}' is linked to plans:")
         click.echo()
         for ms_num in sorted(by_milestone):
             plans = by_milestone[ms_num]
@@ -507,13 +507,17 @@ def product_remove(slug: str, force: bool):
             for p in plans:
                 click.echo(f"    - {p['slug']} [{p['status']}]")
         click.echo()
-        click.echo("Use --force to remove the product and all linked plans.")
-        raise SystemExit(1)
+        if not force:
+            click.echo("Use --force to remove the epic and all linked plans.")
+            raise SystemExit(1)
+        for plans in by_milestone.values():
+            for p in plans:
+                shutil.rmtree(plan_dir(bw, p["slug"]), ignore_errors=True)
 
     try:
         shutil.rmtree(pdir)
     except OSError as e:
-        click.echo(f"Could not remove product directory: {e}", err=True)
+        click.echo(f"Could not remove epic directory: {e}", err=True)
         raise SystemExit(1)
 
-    click.echo(f"Removed product plan: {slug}")
+    click.echo(f"Removed epic plan: {slug}")
